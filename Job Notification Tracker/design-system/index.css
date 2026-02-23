@@ -1,0 +1,20 @@
+/**
+ * KodNest Premium Build System
+ * Index — v1.0
+ *
+ * Single entry point for the entire design system.
+ * Import only this file in your HTML or page stylesheet.
+ *
+ * Load order is intentional:
+ *   1. tokens  — custom properties (no dependencies)
+ *   2. base    — reset + typography + utilities (depends on tokens)
+ *   3. components — all UI components (depends on tokens + base)
+ *   4. layout  — page structure (depends on all above)
+ *   5. states  — feedback states (depends on all above)
+ */
+
+@import './tokens.css';
+@import './base.css';
+@import './components.css';
+@import './layout.css';
+@import './states.css';

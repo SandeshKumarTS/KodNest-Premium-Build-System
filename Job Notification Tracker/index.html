@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KodNest Premium Build System — Design System v1.0</title>
+  <link rel="stylesheet" href="design-system/index.css" />
+  <style>
+    /* Showcase-only overrides — not part of the design system */
+    .ds-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+    }
+    .ds-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+    }
+    .ds-grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════
+       TOP BAR
+  ════════════════════════════════════════════════════ -->
+  <header class="topbar" role="banner">
+    <div class="topbar__inner">
+
+      <!-- Left: Identity -->
+      <div class="topbar__left">
+        <span class="topbar__project-name">KodNest Build System</span>
+        <span class="topbar__divider" aria-hidden="true"></span>
+        <span class="topbar__subtitle">Design System v1.0</span>
+      </div>
+
+      <!-- Center: Progress -->
+      <div class="topbar__center" role="status" aria-label="Design system reference — no step in progress">
+        <div class="progress-indicator">
+          <span class="progress-indicator__label">
+            <span>Reference</span> Document
+          </span>
+          <div class="progress-indicator__track" aria-hidden="true">
+            <div class="progress-indicator__fill" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Status -->
+      <div class="topbar__right">
+        <span class="badge badge--success">System Ready</span>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ════════════════════════════════════════════════════
+       PAGE BODY
+  ════════════════════════════════════════════════════ -->
+  <div class="page-body">
+
+
+    <!-- ══════════════════════════════════════════════════
+         CONTEXT HEADER
+    ══════════════════════════════════════════════════ -->
+    <section class="context-header" aria-labelledby="page-headline">
+      <div class="context-header__inner">
+        <span class="label context-header__eyebrow">Design System Reference</span>
+        <h1 class="context-header__headline" id="page-headline">KodNest Premium Build System</h1>
+        <p class="context-header__subtext">
+          Every component, token, and pattern used across the product. One mind. One system.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════════
+         WORKSPACE LAYOUT
+    ══════════════════════════════════════════════════ -->
+    <div class="workspace-layout">
+
+
+      <!-- ─────────────────────────────────────────────
+           PRIMARY WORKSPACE
+      ───────────────────────────────────────────── -->
+      <main class="workspace-primary" id="main-content">
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  1. COLOR SYSTEM                        │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-colors">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-colors">Color System</h2>
+            <p class="ds-section__desc">4 primary intentions. No gradients. No random tones. Semantic colors extend from the same palette.</p>
+          </div>
+
+          <!-- Core palette -->
+          <div class="ds-grid-5">
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#F7F6F3; border-color:#E0DDD8;"></div>
+              <div class="color-swatch__name">Background</div>
+              <div class="color-swatch__value">--color-bg</div>
+              <div class="color-swatch__value">#F7F6F3</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#FFFFFF;"></div>
+              <div class="color-swatch__name">Surface</div>
+              <div class="color-swatch__value">--color-surface</div>
+              <div class="color-swatch__value">#FFFFFF</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#111111;"></div>
+              <div class="color-swatch__name">Text Primary</div>
+              <div class="color-swatch__value">--color-text-primary</div>
+              <div class="color-swatch__value">#111111</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#8B0000;"></div>
+              <div class="color-swatch__name">Accent</div>
+              <div class="color-swatch__value">--color-accent</div>
+              <div class="color-swatch__value">#8B0000</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#F0EEE9; border-color:#E0DDD8;"></div>
+              <div class="color-swatch__name">Surface Subtle</div>
+              <div class="color-swatch__value">--color-surface-subtle</div>
+              <div class="color-swatch__value">#F0EEE9</div>
+            </div>
+          </div>
+
+          <!-- Semantic / text -->
+          <div class="ds-grid-5">
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#57534E;"></div>
+              <div class="color-swatch__name">Text Secondary</div>
+              <div class="color-swatch__value">--color-text-secondary</div>
+              <div class="color-swatch__value">#57534E</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#A09C96;"></div>
+              <div class="color-swatch__name">Text Muted</div>
+              <div class="color-swatch__value">--color-text-muted</div>
+              <div class="color-swatch__value">#A09C96</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#E0DDD8;"></div>
+              <div class="color-swatch__name">Border</div>
+              <div class="color-swatch__value">--color-border</div>
+              <div class="color-swatch__value">#E0DDD8</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#3A6B4A;"></div>
+              <div class="color-swatch__name">Success</div>
+              <div class="color-swatch__value">--color-success</div>
+              <div class="color-swatch__value">#3A6B4A</div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-swatch__block" style="background:#8A6420;"></div>
+              <div class="color-swatch__name">Warning</div>
+              <div class="color-swatch__value">--color-warning</div>
+              <div class="color-swatch__value">#8A6420</div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  2. TYPOGRAPHY                          │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-type">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-type">Typography</h2>
+            <p class="ds-section__desc">Serif for authority. Sans for clarity. Mono for code. No decorative fonts.</p>
+          </div>
+
+          <!-- Type specimens -->
+          <div class="card">
+            <div class="card__body">
+              <div class="type-specimen">
+                <div class="type-specimen__meta">
+                  <span class="type-specimen__role">H1</span>
+                  <span class="type-specimen__spec">Lora SemiBold · 56px · −0.03em</span>
+                </div>
+                <h1 style="font-size: var(--text-3xl);">Build something that lasts.</h1>
+              </div>
+              <div class="type-specimen">
+                <div class="type-specimen__meta">
+                  <span class="type-specimen__role">H2</span>
+                  <span class="type-specimen__spec">Lora SemiBold · 44px · −0.02em</span>
+                </div>
+                <h2 style="font-size: var(--text-2xl);">Authentication Flow</h2>
+              </div>
+              <div class="type-specimen">
+                <div class="type-specimen__meta">
+                  <span class="type-specimen__role">H3</span>
+                  <span class="type-specimen__spec">Lora SemiBold · 32px · −0.02em</span>
+                </div>
+                <h3 style="font-size: var(--text-xl);">Set up Supabase Auth</h3>
+              </div>
+              <div class="type-specimen">
+                <div class="type-specimen__meta">
+                  <span class="type-specimen__role">H4</span>
+                  <span class="type-specimen__spec">Lora SemiBold · 24px · −0.01em</span>
+                </div>
+                <h4>What you're building</h4>
+              </div>
+              <div class="type-specimen">
+                <div class="type-specimen__meta">
+                  <span class="type-specimen__role">Body MD</span>
+                  <span class="type-specimen__spec">Inter Regular · 18px · lh 1.75</span>
+                </div>
+                <p class="lead">This step connects your frontend to Supabase authentication. You'll build a login page, a registration page, and protected route logic.</p>
+              </div>
+              <div class="type-specimen">
+                <div class="type-specimen__meta">
+                  <span class="type-specimen__role">Body</span>
+                  <span class="type-specimen__spec">Inter Regular · 16px · lh 1.75</span>
+                </div>
+                <p>Paste the prompt below into Lovable. It will generate a complete auth UI with Supabase integration. Review the output before proceeding.</p>
+              </div>
+              <div class="type-specimen">
+                <div class="type-specimen__meta">
+                  <span class="type-specimen__role">Small</span>
+                  <span class="type-specimen__spec">Inter Regular · 14px · lh 1.6</span>
+                </div>
+                <p style="font-size: var(--text-sm); color: var(--color-text-secondary);">Use the existing design system tokens when building this page. Do not introduce new colors or spacing values.</p>
+              </div>
+              <div class="type-specimen">
+                <div class="type-specimen__meta">
+                  <span class="type-specimen__role">Label</span>
+                  <span class="type-specimen__spec">Inter SemiBold · 12px · 0.12em · UPPERCASE</span>
+                </div>
+                <span class="label">Step Explanation</span>
+              </div>
+              <div class="type-specimen">
+                <div class="type-specimen__meta">
+                  <span class="type-specimen__role">Mono</span>
+                  <span class="type-specimen__spec">IBM Plex Mono · 14px</span>
+                </div>
+                <code>const session = await supabase.auth.getSession()</code>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  3. SPACING                             │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-spacing">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-spacing">Spacing System</h2>
+            <p class="ds-section__desc">8px base unit. Use only these values. Whitespace is part of the design.</p>
+          </div>
+
+          <div class="card">
+            <div class="card__body">
+              <div class="spacing-specimen">
+                <div class="spacing-specimen__bar" style="width: 8px;"></div>
+                <span class="spacing-specimen__label">--space-1</span>
+                <span class="spacing-specimen__value">8px · micro gap, component padding</span>
+              </div>
+              <div class="spacing-specimen">
+                <div class="spacing-specimen__bar" style="width: 16px;"></div>
+                <span class="spacing-specimen__label">--space-2</span>
+                <span class="spacing-specimen__value">16px · button padding, tight rows</span>
+              </div>
+              <div class="spacing-specimen">
+                <div class="spacing-specimen__bar" style="width: 24px;"></div>
+                <span class="spacing-specimen__label">--space-3</span>
+                <span class="spacing-specimen__value">24px · card padding, panel sections</span>
+              </div>
+              <div class="spacing-specimen">
+                <div class="spacing-specimen__bar" style="width: 40px;"></div>
+                <span class="spacing-specimen__label">--space-5</span>
+                <span class="spacing-specimen__value">40px · section gaps, layout gutters</span>
+              </div>
+              <div class="spacing-specimen">
+                <div class="spacing-specimen__bar" style="width: 64px;"></div>
+                <span class="spacing-specimen__label">--space-8</span>
+                <span class="spacing-specimen__value">64px · large section breaks, hero padding</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  4. BUTTONS                             │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-buttons">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-buttons">Buttons</h2>
+            <p class="ds-section__desc">Same border radius everywhere. Primary is solid accent. Secondary is outlined. Ghost is text-only.</p>
+          </div>
+
+          <div class="card">
+            <div class="card__header">
+              <h5>Variants</h5>
+            </div>
+            <div class="card__body">
+              <div class="ds-row">
+                <button class="btn btn--primary">Build in Lovable</button>
+                <button class="btn btn--secondary">It Worked</button>
+                <button class="btn btn--neutral">Add Screenshot</button>
+                <button class="btn btn--ghost">I Got an Error</button>
+                <button class="btn btn--danger">Remove Step</button>
+              </div>
+            </div>
+            <div class="card__header" style="border-top: 1px solid var(--color-border); border-bottom: none; margin-top: 0;">
+              <h5>Sizes</h5>
+            </div>
+            <div class="card__body">
+              <div class="ds-row" style="align-items: center;">
+                <button class="btn btn--primary btn--sm">Small</button>
+                <button class="btn btn--primary">Default</button>
+                <button class="btn btn--primary btn--lg">Large</button>
+              </div>
+            </div>
+            <div class="card__header" style="border-top: 1px solid var(--color-border); border-bottom: none;">
+              <h5>Disabled State</h5>
+            </div>
+            <div class="card__body">
+              <div class="ds-row">
+                <button class="btn btn--primary" disabled>Primary Disabled</button>
+                <button class="btn btn--secondary" disabled>Secondary Disabled</button>
+                <button class="btn btn--ghost" disabled>Ghost Disabled</button>
+              </div>
+            </div>
+            <div class="card__header" style="border-top: 1px solid var(--color-border); border-bottom: none;">
+              <h5>Full Width</h5>
+            </div>
+            <div class="card__body">
+              <button class="btn btn--primary btn--block">Full Width Primary</button>
+              <div style="margin-top: var(--space-1);">
+                <button class="btn btn--secondary btn--block">Full Width Secondary</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  5. BADGES                              │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-badges">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-badges">Badges &amp; Status</h2>
+            <p class="ds-section__desc">Non-interactive status indicators. Used in Top Bar and step lists.</p>
+          </div>
+
+          <div class="card">
+            <div class="card__body">
+              <div class="ds-row">
+                <span class="badge badge--not-started">Not Started</span>
+                <span class="badge badge--in-progress">In Progress</span>
+                <span class="badge badge--shipped">Shipped</span>
+                <span class="badge badge--success">Passed</span>
+                <span class="badge badge--error">Error</span>
+                <span class="badge badge--neutral">Skipped</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  6. CARDS                               │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-cards">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-cards">Cards</h2>
+            <p class="ds-section__desc">Subtle border. No drop shadows. Balanced padding. Left-accent variants signal state.</p>
+          </div>
+
+          <div class="ds-grid-2">
+
+            <!-- Default card -->
+            <div class="card">
+              <div class="card__header">
+                <h5>Default Card</h5>
+                <span class="badge badge--neutral">card</span>
+              </div>
+              <div class="card__body">
+                <p>The standard content container. White surface, 1px border, 8px radius. Use this for most content blocks.</p>
+              </div>
+              <div class="card__footer">
+                <span style="font-size: var(--text-xs); color: var(--color-text-muted);">card__footer</span>
+                <button class="btn btn--ghost btn--sm">Action</button>
+              </div>
+            </div>
+
+            <!-- Flat card -->
+            <div class="card card--flat">
+              <div class="card__header">
+                <h5>Flat Card</h5>
+                <span class="badge badge--neutral">card--flat</span>
+              </div>
+              <div class="card__body">
+                <p>Subtle background tint. Used for secondary content, inset areas, or nested groupings.</p>
+              </div>
+            </div>
+
+            <!-- Dashed card -->
+            <div class="card card--dashed">
+              <div class="card__body">
+                <div class="empty-state empty-state--sm">
+                  <div class="empty-state__icon">⬆</div>
+                  <div class="empty-state__title">No screenshot yet</div>
+                  <p class="empty-state__body">Build the UI, take a screenshot, and add it here as proof.</p>
+                  <div class="empty-state__actions">
+                    <button class="btn btn--secondary btn--sm">Add Screenshot</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accent card -->
+            <div class="card card--accent">
+              <div class="card__header">
+                <h5>Accent Card</h5>
+                <span class="badge badge--in-progress">Active Step</span>
+              </div>
+              <div class="card__body">
+                <p>Left accent border in deep red. Used for the current active step or highlighted action.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Success / Warning / Error -->
+          <div class="ds-grid-3">
+            <div class="card card--success">
+              <div class="card__body">
+                <p style="font-size:var(--text-sm); font-weight:var(--weight-medium); color: var(--color-success);">card--success</p>
+                <p style="font-size: var(--text-sm);">Step completed and verified.</p>
+              </div>
+            </div>
+            <div class="card card--warning">
+              <div class="card__body">
+                <p style="font-size:var(--text-sm); font-weight:var(--weight-medium); color: var(--color-warning);">card--warning</p>
+                <p style="font-size: var(--text-sm);">Review required before continuing.</p>
+              </div>
+            </div>
+            <div class="card card--error">
+              <div class="card__body">
+                <p style="font-size:var(--text-sm); font-weight:var(--weight-medium); color: var(--color-error);">card--error</p>
+                <p style="font-size: var(--text-sm);">Build failed. See error details below.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  7. INPUTS & FORMS                      │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-inputs">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-inputs">Inputs &amp; Forms</h2>
+            <p class="ds-section__desc">Clean borders. No heavy shadows. Deep red focus ring. Labels always visible.</p>
+          </div>
+
+          <div class="card">
+            <div class="card__body">
+
+              <div class="ds-grid-2">
+                <div>
+                  <div class="field">
+                    <label class="field__label required" for="input-default">Project Name</label>
+                    <input class="input" id="input-default" type="text" placeholder="e.g. KodNest Auth Module" />
+                    <span class="field__hint">This will appear in your Top Bar.</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="field">
+                    <label class="field__label" for="input-disabled">Team Slug</label>
+                    <input class="input" id="input-disabled" type="text" placeholder="your-team" disabled />
+                    <span class="field__hint">Disabled inputs cannot be edited.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field" style="margin-top: var(--space-3);">
+                <label class="field__label required" for="input-error">Build Prompt</label>
+                <input class="input" id="input-error" type="text" value="Create a login page" style="border-color: var(--color-error-border);" />
+                <span class="field__error-message">This prompt is too short. Provide more context about the UI components needed.</span>
+              </div>
+
+              <div class="field" style="margin-top: var(--space-3);">
+                <label class="field__label" for="textarea-notes">Step Notes</label>
+                <textarea class="textarea" id="textarea-notes" placeholder="Document anything that deviated from the expected output…"></textarea>
+                <span class="field__hint">Optional. Helps you review this step later.</span>
+              </div>
+
+              <div class="field" style="margin-top: var(--space-3);">
+                <label class="field__label" for="select-status">Step Status</label>
+                <select class="select" id="select-status">
+                  <option value="">Select status…</option>
+                  <option value="not-started">Not Started</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="shipped">Shipped</option>
+                </select>
+              </div>
+
+              <div style="margin-top: var(--space-3);">
+                <label class="checkbox-field">
+                  <input type="checkbox" checked />
+                  <span class="checkbox-label">Include this step in the build summary</span>
+                </label>
+                <label class="checkbox-field" style="margin-top: var(--space-1);">
+                  <input type="checkbox" />
+                  <span class="checkbox-label">Mark this step as optional</span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  8. ALERTS                              │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-alerts">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-alerts">Inline Alerts</h2>
+            <p class="ds-section__desc">Contextual feedback blocks. Persistent in view. Not toasts.</p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+            <div class="alert alert--info" role="note">
+              <span class="alert__icon">ℹ</span>
+              <div class="alert__content">
+                <div class="alert__title">Prompt updated</div>
+                <div class="alert__body">The build prompt for this step has been revised. Review it before rebuilding.</div>
+              </div>
+            </div>
+            <div class="alert alert--success" role="status">
+              <span class="alert__icon">✓</span>
+              <div class="alert__content">
+                <div class="alert__title">Build succeeded</div>
+                <div class="alert__body">Lovable generated your auth UI. Verify it matches the spec before continuing.</div>
+              </div>
+            </div>
+            <div class="alert alert--warning" role="note">
+              <span class="alert__icon">⚠</span>
+              <div class="alert__content">
+                <div class="alert__title">Missing environment variable</div>
+                <div class="alert__body">Your <code>SUPABASE_URL</code> is not set. The login page will not function until this is added in Lovable's settings.</div>
+              </div>
+            </div>
+            <div class="alert alert--error" role="alert">
+              <span class="alert__icon">✕</span>
+              <div class="alert__content">
+                <div class="alert__title">Build did not complete</div>
+                <div class="alert__body">The generated code references a component that does not exist. Copy the error from Lovable and use the prompt in the panel to request a fix.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  9. STATES                              │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-states">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-states">Feedback States</h2>
+            <p class="ds-section__desc">Every state answers: what happened, and what to do next. No dead ends.</p>
+          </div>
+
+          <div class="ds-grid-3">
+
+            <!-- Error state -->
+            <div class="error-state">
+              <div class="error-state__title">Build did not complete</div>
+              <p class="error-state__body">Lovable returned an error for the <code>AuthForm</code> component. The import path does not match the file structure.</p>
+              <div class="error-state__actions">
+                <button class="btn btn--secondary btn--sm">Fix with Prompt</button>
+                <button class="btn btn--ghost btn--sm">View Logs</button>
+              </div>
+            </div>
+
+            <!-- Success state -->
+            <div class="success-state">
+              <div class="success-state__title">Step verified</div>
+              <p class="success-state__body">All four proof checkboxes are complete. You can safely advance to Step 4.</p>
+              <div class="success-state__actions">
+                <button class="btn btn--primary btn--sm">Next Step →</button>
+              </div>
+            </div>
+
+            <!-- Warning state -->
+            <div class="warning-state">
+              <div class="warning-state__title">Review before continuing</div>
+              <p class="warning-state__body">You have not added a screenshot for this step. Visual proof is required before marking it as shipped.</p>
+            </div>
+
+          </div>
+
+          <!-- Empty state — full width -->
+          <div class="card card--dashed">
+            <div class="empty-state">
+              <div class="empty-state__icon">📄</div>
+              <div class="empty-state__title">No steps created yet</div>
+              <p class="empty-state__body">Your build plan is empty. Create your first step to start tracking your project's progress.</p>
+              <div class="empty-state__actions">
+                <button class="btn btn--primary">Create First Step</button>
+                <button class="btn btn--ghost">Import from Template</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skeleton loading -->
+          <div class="card">
+            <div class="card__header">
+              <h5>Skeleton Loading</h5>
+              <span class="tag">Loading State</span>
+            </div>
+            <div class="card__body">
+              <div class="skeleton-block" style="padding: 0;">
+                <div class="skeleton skeleton--heading" style="width: 40%;"></div>
+                <div class="skeleton skeleton--text"></div>
+                <div class="skeleton skeleton--text-sm"></div>
+                <div style="display:flex; gap: var(--space-1); margin-top: var(--space-1);">
+                  <div class="skeleton skeleton--button"></div>
+                  <div class="skeleton skeleton--button"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+
+        <!-- ┌─────────────────────────────────────────┐
+             │  10. TAGS & MISC                        │
+             └─────────────────────────────────────────┘ -->
+        <section class="ds-section" aria-labelledby="section-misc">
+          <div class="ds-section__header">
+            <h2 class="ds-section__title" id="section-misc">Tags &amp; Utilities</h2>
+            <p class="ds-section__desc">Small metadata labels. Divider with label. Inline code.</p>
+          </div>
+
+          <div class="card">
+            <div class="card__body">
+
+              <!-- Tags -->
+              <div class="ds-row">
+                <span class="tag">Supabase</span>
+                <span class="tag">React</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag tag--accent">Required</span>
+                <span class="tag tag--success">Verified</span>
+              </div>
+
+              <!-- Divider with label -->
+              <div style="margin-top: var(--space-3);">
+                <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Content above divider</p>
+                <div class="divider-label">
+                  <span class="divider-label__text">or continue with</span>
+                </div>
+                <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Content below divider</p>
+              </div>
+
+              <!-- Code inline -->
+              <div style="margin-top: var(--space-3);">
+                <p>Use <code>supabase.auth.signInWithPassword()</code> to authenticate users. Store the returned <code>session</code> in your state manager.</p>
+              </div>
+
+              <!-- Pre block -->
+              <div style="margin-top: var(--space-3);">
+                <pre><code>const { data, error } = await supabase
+  .auth
+  .signInWithPassword({
+    email: 'user@example.com',
+    password: 'secure-password',
+  })</code></pre>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+
+      <!-- ─────────────────────────────────────────────
+           SECONDARY PANEL
+      ───────────────────────────────────────────── -->
+      <aside class="workspace-panel" aria-label="Design system quick reference">
+
+        <!-- Step explanation -->
+        <div class="panel-section">
+          <span class="label">About This System</span>
+          <div class="panel-section__body">
+            <p>This design system defines every visual and interaction rule for the KodNest Build System. It is the single source of truth. No decisions are made outside of it.</p>
+          </div>
+        </div>
+
+        <!-- Prompt box -->
+        <div class="panel-section">
+          <span class="label">Design Rule</span>
+          <div class="prompt-box">
+            <div class="prompt-box__content">Never use a color, spacing value, or font that is not defined in tokens.css. If a token does not exist for your need, add it to tokens.css first.</div>
+            <div class="prompt-box__footer">
+              <span class="prompt-box__meta">design-system/tokens.css</span>
+              <button class="btn btn--ghost btn--sm" onclick="navigator.clipboard.writeText(this.closest('.prompt-box').querySelector('.prompt-box__content').textContent.trim()); this.textContent='Copied'; setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- File structure -->
+        <div class="panel-section">
+          <span class="label">File Structure</span>
+          <div class="card card--flat" style="margin: 0;">
+            <div class="card__body" style="padding: var(--space-2);">
+              <pre style="font-size: var(--text-xs); background: transparent; color: var(--color-text-secondary); padding: 0; border: none; border-radius: 0;">design-system/
+  tokens.css
+  base.css
+  components.css
+  layout.css
+  states.css
+  index.css
+index.html</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick ref: Spacing -->
+        <div class="panel-section">
+          <span class="label">Spacing Quick Ref</span>
+          <div style="display: flex; flex-direction: column; gap: var(--space-half);">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: var(--text-xs);">
+              <code style="font-size: var(--text-xs);">--space-1</code> <span style="color: var(--color-text-muted);">8px</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: var(--text-xs);">
+              <code style="font-size: var(--text-xs);">--space-2</code> <span style="color: var(--color-text-muted);">16px</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: var(--text-xs);">
+              <code style="font-size: var(--text-xs);">--space-3</code> <span style="color: var(--color-text-muted);">24px</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: var(--text-xs);">
+              <code style="font-size: var(--text-xs);">--space-5</code> <span style="color: var(--color-text-muted);">40px</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: var(--text-xs);">
+              <code style="font-size: var(--text-xs);">--space-8</code> <span style="color: var(--color-text-muted);">64px</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick ref: Interaction rules -->
+        <div class="panel-section">
+          <span class="label">Interaction Rules</span>
+          <div class="panel-section__body">
+            <p>Transitions: 150–200ms, ease-in-out.<br>No bounce. No parallax. No animation noise.</p>
+            <p style="margin-top: var(--space-1);">Hover = background shift or border darkens.<br>Active = 1px translate down.</p>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="panel-section">
+          <span class="label">System Status</span>
+          <div style="display: flex; flex-direction: column; gap: var(--space-1);">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: var(--text-xs); color: var(--color-text-secondary);">Tokens</span>
+              <span class="badge badge--success">Ready</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: var(--text-xs); color: var(--color-text-secondary);">Base</span>
+              <span class="badge badge--success">Ready</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: var(--text-xs); color: var(--color-text-secondary);">Components</span>
+              <span class="badge badge--success">Ready</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: var(--text-xs); color: var(--color-text-secondary);">Layout</span>
+              <span class="badge badge--success">Ready</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: var(--text-xs); color: var(--color-text-secondary);">States</span>
+              <span class="badge badge--success">Ready</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div><!-- /.workspace-layout -->
+
+
+    <!-- ══════════════════════════════════════════════════
+         PROOF FOOTER
+    ══════════════════════════════════════════════════ -->
+    <footer class="proof-footer" role="contentinfo" aria-label="Design system proof of completion">
+      <div class="proof-footer__inner">
+        <div class="proof-footer__heading">
+          <span class="label">Design System Proof</span>
+          <div class="proof-footer__actions">
+            <span style="font-size: var(--text-xs); color: var(--color-text-muted);">Check all boxes before building the first feature</span>
+          </div>
+        </div>
+
+        <div class="proof-items" role="group" aria-label="Completion checklist">
+
+          <div class="proof-item">
+            <label class="proof-item__check">
+              <input type="checkbox" id="proof-tokens" checked aria-describedby="proof-tokens-hint" />
+              <span class="proof-item__label-text">Tokens Defined</span>
+            </label>
+            <span class="proof-item__hint" id="proof-tokens-hint">All colors, spacing, and type values are in tokens.css</span>
+          </div>
+
+          <div class="proof-item">
+            <label class="proof-item__check">
+              <input type="checkbox" id="proof-components" checked aria-describedby="proof-components-hint" />
+              <span class="proof-item__label-text">Components Built</span>
+            </label>
+            <span class="proof-item__hint" id="proof-components-hint">Buttons, cards, inputs, badges, and states are ready</span>
+          </div>
+
+          <div class="proof-item">
+            <label class="proof-item__check">
+              <input type="checkbox" id="proof-layout" checked aria-describedby="proof-layout-hint" />
+              <span class="proof-item__label-text">Layout Tested</span>
+            </label>
+            <span class="proof-item__hint" id="proof-layout-hint">TopBar, ContextHeader, Workspace, Panel, and Footer work together</span>
+          </div>
+
+          <div class="proof-item">
+            <label class="proof-item__check">
+              <input type="checkbox" id="proof-states" checked aria-describedby="proof-states-hint" />
+              <span class="proof-item__label-text">States Complete</span>
+            </label>
+            <span class="proof-item__hint" id="proof-states-hint">Error, empty, success, warning, and loading states are defined</span>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+
+
+  </div><!-- /.page-body -->
+
+</body>
+</html>

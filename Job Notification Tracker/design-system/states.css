@@ -1,0 +1,299 @@
+/**
+ * KodNest Premium Build System
+ * States — v1.0
+ *
+ * Error, Empty, Success, and Loading states.
+ *
+ * RULE: Every state must answer two questions:
+ *   1. What happened?
+ *   2. What should I do next?
+ *
+ * Never leave a user in a dead end. Never blame the user for an error.
+ *
+ * Depends on: tokens.css, base.css, components.css
+ */
+
+
+/* ═══════════════════════════════════════════════════════
+   ERROR STATE
+   Explains what went wrong and what to do next.
+   Used for: form validation, failed builds, API errors.
+
+   TONE: Calm. Factual. Actionable.
+   NEVER: "Something went wrong!", "Oops!", blame language.
+═══════════════════════════════════════════════════════ */
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  border-radius: var(--radius-lg);
+  border-left-width: 3px;
+  border-left-color: var(--color-error);
+}
+
+.error-state__icon {
+  font-size: var(--text-md);
+  line-height: 1;
+}
+
+.error-state__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-error);
+  line-height: var(--leading-snug);
+}
+
+.error-state__body {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: var(--text-max-width);
+}
+
+.error-state__body code {
+  font-size: var(--text-xs);
+  background-color: var(--color-error-bg);
+  border-color: var(--color-error-border);
+}
+
+.error-state__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-1);
+}
+
+/* Inline error (smaller, no border-left accent) */
+.error-inline {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  border-radius: var(--radius-md);
+}
+
+.error-inline__label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-error);
+  line-height: var(--leading-normal);
+}
+
+.error-inline__detail {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   EMPTY STATE
+   When a view has no content yet.
+   Must always offer a clear next action.
+   Never feels dead. Never feels broken.
+═══════════════════════════════════════════════════════ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-5);
+  min-height: 200px;
+}
+
+.empty-state__icon {
+  font-size: var(--text-xl);   /* REQ3: token (32px) replaces hardcoded 32px */
+  line-height: 1;
+  opacity: 0.35;
+  margin-bottom: var(--space-1);
+}
+
+.empty-state__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  line-height: var(--leading-snug);
+}
+
+.empty-state__body {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 340px;
+}
+
+.empty-state__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Small variant — used inside cards */
+.empty-state--sm {
+  padding: var(--space-5) var(--space-3);
+  min-height: 140px;
+  gap: var(--space-1);
+}
+
+.empty-state--sm .empty-state__icon {
+  font-size: var(--text-lg);   /* REQ3: 24px token — 22px had no on-scale equivalent */
+}
+
+.empty-state--sm .empty-state__title {
+  font-size: var(--text-sm);
+}
+
+.empty-state--sm .empty-state__body {
+  font-size: var(--text-xs);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   SUCCESS STATE
+   Confirms an action completed successfully.
+   Brief. Clear. Moves the user forward.
+═══════════════════════════════════════════════════════ */
+
+.success-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background-color: var(--color-success-bg);
+  border: 1px solid var(--color-success-border);
+  border-radius: var(--radius-lg);
+  border-left-width: 3px;
+  border-left-color: var(--color-success);
+}
+
+.success-state__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-success);
+  line-height: var(--leading-snug);
+}
+
+.success-state__body {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.success-state__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   WARNING STATE
+   Non-blocking notice. Keeps the user informed.
+   Does not interrupt the workflow.
+═══════════════════════════════════════════════════════ */
+
+.warning-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background-color: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  border-radius: var(--radius-lg);
+  border-left-width: 3px;
+  border-left-color: var(--color-warning);
+}
+
+.warning-state__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-warning);
+}
+
+.warning-state__body {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   LOADING STATE
+   Skeleton screens — no spinners, no bounce animations.
+   Calm pulse: 1.6s, subtle opacity shift only.
+═══════════════════════════════════════════════════════ */
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+.skeleton {
+  background-color: var(--color-surface-subtle);
+  border-radius: var(--radius-sm);
+  animation: skeleton-pulse 1.6s ease-in-out infinite;
+  display: block;
+}
+
+.skeleton--text {
+  height: 16px;
+  width: 100%;
+}
+
+.skeleton--text-sm {
+  height: 12px;
+  width: 70%;
+}
+
+.skeleton--heading {
+  height: 28px;
+  width: 55%;
+}
+
+.skeleton--button {
+  height: 34px;
+  width: 100px;
+  border-radius: var(--radius-md);
+}
+
+.skeleton--card {
+  height: 120px;
+  border-radius: var(--radius-lg);
+  width: 100%;
+}
+
+.skeleton--avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+/* Skeleton block group */
+.skeleton-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+}

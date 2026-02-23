@@ -1,0 +1,157 @@
+/**
+ * KodNest Premium Build System
+ * Design Tokens — v1.0
+ *
+ * Single source of truth for all visual decisions.
+ * Nothing is arbitrary. Everything traces back to a token.
+ * No value should be hardcoded anywhere outside this file.
+ *
+ * COLOR RULE: 4 primary intentions only.
+ *   Background · Text · Accent · Neutral
+ *   Success and Warning extend from Neutral with semantic intent.
+ */
+
+:root {
+
+  /* ═══════════════════════════════════════════════════════
+     COLOR SYSTEM
+  ═══════════════════════════════════════════════════════ */
+
+  /* — Backgrounds — */
+  --color-bg:                #F7F6F3;   /* Page canvas                        */
+  --color-surface:           #FFFFFF;   /* Cards, elevated surfaces            */
+  --color-surface-subtle:    #F0EEE9;   /* Inset areas, code blocks, tags      */
+
+  /* — Text — */
+  --color-text-primary:      #111111;   /* Headlines, body copy, labels        */
+  --color-text-secondary:    #57534E;   /* Supporting text, descriptions       */
+  --color-text-muted:        #A09C96;   /* Placeholders, disabled, hints       */
+  --color-text-inverse:      #F7F6F3;   /* Text on dark/accent backgrounds     */
+
+  /* — Accent (Deep Red) — */
+  --color-accent:            #8B0000;   /* Primary actions, focus, links       */
+  --color-accent-dark:       #6B0000;   /* Hover state of accent               */
+  --color-accent-subtle:     #FDF2F2;   /* Tinted background, hover on ghost   */
+
+  /* — Borders — */
+  --color-border:            #E0DDD8;   /* Default UI borders                  */
+  --color-border-strong:     #C8C3BB;   /* Emphasized or active borders        */
+  --color-border-focus:      #8B0000;   /* Keyboard focus ring                 */
+
+  /* — Semantic: Success (Muted Green) — */
+  --color-success:           #3A6B4A;
+  --color-success-bg:        #EFF5F1;
+  --color-success-border:    #B2D1BF;
+
+  /* — Semantic: Warning (Muted Amber) — */
+  --color-warning:           #8A6420;
+  --color-warning-bg:        #FDF6ED;
+  --color-warning-border:    #DBBE8A;
+
+  /* — Semantic: Error (same hue as Accent, intentionally unified) — */
+  --color-error:             #8B0000;
+  --color-error-bg:          #FDF2F2;
+  --color-error-border:      #D4AAAA;
+
+
+  /* ═══════════════════════════════════════════════════════
+     SPACING SYSTEM
+     Base unit: 8px.
+     Only these values are permitted for margin, padding, gap.
+     Never use 13px, 27px, or any non-scale value.
+  ═══════════════════════════════════════════════════════ */
+
+  --space-1:    8px;
+  --space-2:    16px;
+  --space-3:    24px;
+  --space-5:    40px;
+  --space-8:    64px;
+
+  /* Micro unit for component-level padding (half of base) */
+  --space-half: 4px;
+
+
+  /* ═══════════════════════════════════════════════════════
+     TYPOGRAPHY
+  ═══════════════════════════════════════════════════════ */
+
+  /* — Families — */
+  --font-serif:   'Lora', Georgia, 'Times New Roman', serif;
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Fira Mono', 'Consolas', monospace;
+
+  /* — Type Scale — */
+  --text-xs:      12px;
+  --text-sm:      14px;
+  --text-base:    16px;
+  --text-md:      18px;
+  --text-lg:      24px;
+  --text-xl:      32px;
+  --text-2xl:     44px;
+  --text-3xl:     56px;
+
+  /* — Line Heights — */
+  --leading-tight:    1.2;
+  --leading-snug:     1.35;
+  --leading-normal:   1.6;
+  --leading-relaxed:  1.75;
+
+  /* — Font Weights — */
+  --weight-regular:   400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+
+  /* — Letter Spacing — */
+  --tracking-tight:    -0.02em;
+  --tracking-tighter:  -0.03em;
+  --tracking-normal:    0em;
+  --tracking-wide:      0.04em;
+  --tracking-widest:    0.12em;
+
+  /* — Readable prose width — */
+  --text-max-width:   720px;
+
+
+  /* ═══════════════════════════════════════════════════════
+     BORDER RADIUS
+     Same radius everywhere. Visual coherence through repetition.
+  ═══════════════════════════════════════════════════════ */
+
+  --radius-sm:    3px;
+  --radius-md:    5px;
+  --radius-lg:    8px;
+  --radius-full:  9999px;
+
+
+  /* ═══════════════════════════════════════════════════════
+     TRANSITIONS
+     150–200ms only. ease-in-out. No bounce. No spring.
+     Calm transitions signal confident software.
+  ═══════════════════════════════════════════════════════ */
+
+  --transition-fast:    150ms ease-in-out;
+  --transition-base:    175ms ease-in-out;
+  --transition-slow:    200ms ease-in-out;
+
+
+  /* ═══════════════════════════════════════════════════════
+     LAYOUT
+  ═══════════════════════════════════════════════════════ */
+
+  --layout-max-width:   1320px;
+  --layout-gutter:      var(--space-5);
+  --topbar-height:      56px;   /* token — no duplicate text-max-width here */
+
+
+  /* ═══════════════════════════════════════════════════════
+     Z-INDEX SCALE
+  ═══════════════════════════════════════════════════════ */
+
+  --z-base:     0;
+  --z-raised:   10;
+  --z-sticky:   100;
+  --z-topbar:   200;
+  --z-modal:    300;
+
+}
