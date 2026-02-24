@@ -90,20 +90,16 @@
   ══════════════════════════════════════════════ -->
   <div class="app-body">
 
-    <!-- ── Route: / (Home) ─────────────────────── -->
+    <!-- ── Route: / (Home — Landing Page) ─────── -->
     <div class="route-view" data-view="/" id="view-home" role="main" aria-label="Home">
-      <div class="route-placeholder">
-        <span class="route-placeholder__eyebrow label text-muted">Home</span>
-        <h1 class="route-placeholder__heading">Job Notification Tracker</h1>
-        <p class="route-placeholder__subtext">
-          Your calm, intentional workspace for tracking job opportunities, alerts, and application proof.
-        </p>
-        <div class="route-placeholder__divider" aria-hidden="true"></div>
-        <div class="route-placeholder__region" aria-label="Content placeholder">
-          <span class="route-placeholder__region-label">Home Content</span>
-          <p class="route-placeholder__region-note">
-            This section will be built in the next step.
-          </p>
+      <div class="landing-hero">
+        <span class="landing-hero__eyebrow label text-muted">Job Notification Tracker</span>
+        <h1 class="landing-hero__heading">Stop Missing<br>The Right Jobs.</h1>
+        <p class="landing-hero__subtext">Precision-matched job discovery delivered daily at 9AM.</p>
+        <a href="#/settings" class="btn btn--primary landing-hero__cta">Start Tracking</a>
+        <div class="landing-hero__proof">
+          <span class="landing-hero__proof-dot" aria-hidden="true"></span>
+          <span class="label text-muted">Built for students who are serious about landing the right role</span>
         </div>
       </div>
     </div>
@@ -113,15 +109,12 @@
       <div class="route-placeholder">
         <span class="route-placeholder__eyebrow label text-muted">Overview</span>
         <h1 class="route-placeholder__heading">Dashboard</h1>
-        <p class="route-placeholder__subtext">
-          A high-level view of your active job notifications, recent matches, and daily digest summary.
-        </p>
+        <p class="route-placeholder__subtext">Your matched jobs will appear here once tracking is active.</p>
         <div class="route-placeholder__divider" aria-hidden="true"></div>
-        <div class="route-placeholder__region" aria-label="Content placeholder">
-          <span class="route-placeholder__region-label">Dashboard Content</span>
-          <p class="route-placeholder__region-note">
-            This section will be built in the next step.
-          </p>
+        <div class="empty-state">
+          <div class="empty-state__icon" aria-hidden="true">&#9744;</div>
+          <p class="empty-state__title">No jobs yet.</p>
+          <p class="empty-state__body">In the next step, you will load a realistic dataset.</p>
         </div>
       </div>
     </div>
@@ -131,15 +124,12 @@
       <div class="route-placeholder">
         <span class="route-placeholder__eyebrow label text-muted">Bookmarks</span>
         <h1 class="route-placeholder__heading">Saved Jobs</h1>
-        <p class="route-placeholder__subtext">
-          All positions you have bookmarked for review, comparison, or future application.
-        </p>
+        <p class="route-placeholder__subtext">Positions you've bookmarked for review and future application.</p>
         <div class="route-placeholder__divider" aria-hidden="true"></div>
-        <div class="route-placeholder__region" aria-label="Content placeholder">
-          <span class="route-placeholder__region-label">Saved Jobs Content</span>
-          <p class="route-placeholder__region-note">
-            This section will be built in the next step.
-          </p>
+        <div class="empty-state">
+          <div class="empty-state__icon" aria-hidden="true">&#9825;</div>
+          <p class="empty-state__title">Nothing saved yet.</p>
+          <p class="empty-state__body">When you save a job from your dashboard, it will appear here for easy access.</p>
         </div>
       </div>
     </div>
@@ -149,15 +139,12 @@
       <div class="route-placeholder">
         <span class="route-placeholder__eyebrow label text-muted">Daily Summary</span>
         <h1 class="route-placeholder__heading">Digest</h1>
-        <p class="route-placeholder__subtext">
-          Your curated daily email digest — manage frequency, sources, and keyword filters here.
-        </p>
+        <p class="route-placeholder__subtext">Your curated daily briefing — top matched roles delivered at 9AM.</p>
         <div class="route-placeholder__divider" aria-hidden="true"></div>
-        <div class="route-placeholder__region" aria-label="Content placeholder">
-          <span class="route-placeholder__region-label">Digest Content</span>
-          <p class="route-placeholder__region-note">
-            This section will be built in the next step.
-          </p>
+        <div class="empty-state">
+          <div class="empty-state__icon" aria-hidden="true">&#9728;</div>
+          <p class="empty-state__title">No digest yet.</p>
+          <p class="empty-state__body">Your first digest will be generated once your preferences are saved and jobs are tracked.</p>
         </div>
       </div>
     </div>
@@ -167,16 +154,70 @@
       <div class="route-placeholder">
         <span class="route-placeholder__eyebrow label text-muted">Configuration</span>
         <h1 class="route-placeholder__heading">Settings</h1>
-        <p class="route-placeholder__subtext">
-          Control notification channels, alert rules, role preferences, and account details.
-        </p>
+        <p class="route-placeholder__subtext">Set your job preferences so we can match and deliver only the roles that matter to you.</p>
         <div class="route-placeholder__divider" aria-hidden="true"></div>
-        <div class="route-placeholder__region" aria-label="Content placeholder">
-          <span class="route-placeholder__region-label">Settings Content</span>
-          <p class="route-placeholder__region-note">
-            This section will be built in the next step.
-          </p>
-        </div>
+
+        <form class="settings-form" onsubmit="return false;" aria-label="Job preferences form">
+
+          <!-- Role Keywords -->
+          <div class="settings-form__group">
+            <label class="settings-form__label label" for="field-keywords">Role Keywords</label>
+            <input
+              id="field-keywords"
+              type="text"
+              class="input settings-form__input"
+              placeholder="e.g. Frontend Developer, React, Node.js"
+              disabled
+              aria-describedby="hint-keywords"
+            />
+            <span id="hint-keywords" class="settings-form__hint">Separate multiple keywords with commas. Logic will be added in the next step.</span>
+          </div>
+
+          <!-- Preferred Locations -->
+          <div class="settings-form__group">
+            <label class="settings-form__label label" for="field-locations">Preferred Locations</label>
+            <input
+              id="field-locations"
+              type="text"
+              class="input settings-form__input"
+              placeholder="e.g. Bangalore, Hyderabad, Remote"
+              disabled
+              aria-describedby="hint-locations"
+            />
+            <span id="hint-locations" class="settings-form__hint">Enter cities or regions where you're open to work.</span>
+          </div>
+
+          <!-- Work Mode -->
+          <div class="settings-form__group">
+            <label class="settings-form__label label" for="field-mode">Work Mode</label>
+            <select id="field-mode" class="select settings-form__input" disabled aria-describedby="hint-mode">
+              <option value="" disabled selected>Select a mode</option>
+              <option value="remote">Remote</option>
+              <option value="hybrid">Hybrid</option>
+              <option value="onsite">Onsite</option>
+            </select>
+            <span id="hint-mode" class="settings-form__hint">Choose your preferred working arrangement.</span>
+          </div>
+
+          <!-- Experience Level -->
+          <div class="settings-form__group">
+            <label class="settings-form__label label" for="field-experience">Experience Level</label>
+            <select id="field-experience" class="select settings-form__input" disabled aria-describedby="hint-experience">
+              <option value="" disabled selected>Select a level</option>
+              <option value="entry">Entry Level (0–1 years)</option>
+              <option value="junior">Junior (1–2 years)</option>
+              <option value="mid">Mid Level (2–4 years)</option>
+              <option value="senior">Senior (4+ years)</option>
+            </select>
+            <span id="hint-experience" class="settings-form__hint">We use this to filter roles matched to your stage.</span>
+          </div>
+
+          <div class="settings-form__footer">
+            <button type="submit" class="btn btn--primary" disabled>Save Preferences</button>
+            <span class="settings-form__footer-note label text-muted">Logic will be connected in the next step.</span>
+          </div>
+
+        </form>
       </div>
     </div>
 
@@ -185,15 +226,12 @@
       <div class="route-placeholder">
         <span class="route-placeholder__eyebrow label text-muted">Verification</span>
         <h1 class="route-placeholder__heading">Proof</h1>
-        <p class="route-placeholder__subtext">
-          Evidence log and checklist for every notification sent — confirm delivery, opens, and actions taken.
-        </p>
+        <p class="route-placeholder__subtext">Artifact collection — evidence that every notification was delivered, seen, and acted upon.</p>
         <div class="route-placeholder__divider" aria-hidden="true"></div>
-        <div class="route-placeholder__region" aria-label="Content placeholder">
-          <span class="route-placeholder__region-label">Proof Content</span>
-          <p class="route-placeholder__region-note">
-            This section will be built in the next step.
-          </p>
+        <div class="empty-state">
+          <div class="empty-state__icon" aria-hidden="true">&#10003;</div>
+          <p class="empty-state__title">No artifacts yet.</p>
+          <p class="empty-state__body">Proof logs, delivery receipts, and action confirmations will be collected here once the system is live.</p>
         </div>
       </div>
     </div>
