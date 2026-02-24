@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Job Notification Tracker — built on the KodNest Premium Build System." />
+  <title>Job Notification Tracker</title>
+
+  <!-- KodNest Design System (tokens → base → components → layout → states) -->
+  <link rel="stylesheet" href="design-system/index.css" />
+  <!-- App-level navigation and route shell styles -->
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       TOP NAVIGATION BAR
+  ══════════════════════════════════════════════ -->
+  <nav class="app-nav" role="navigation" aria-label="Main navigation">
+    <div class="app-nav__inner">
+
+      <!-- Brand -->
+      <a href="#/" class="app-nav__brand" aria-label="Job Notification Tracker home">
+        <span class="app-nav__brand-dot" aria-hidden="true"></span>
+        <span class="app-nav__brand-name">Job Notification Tracker</span>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="app-nav__links" role="list" id="desktop-nav">
+        <li class="app-nav__link" data-route="/dashboard">
+          <a href="#/dashboard">Dashboard</a>
+        </li>
+        <li class="app-nav__link" data-route="/saved">
+          <a href="#/saved">Saved</a>
+        </li>
+        <li class="app-nav__link" data-route="/digest">
+          <a href="#/digest">Digest</a>
+        </li>
+        <li class="app-nav__link" data-route="/settings">
+          <a href="#/settings">Settings</a>
+        </li>
+        <li class="app-nav__link" data-route="/proof">
+          <a href="#/proof">Proof</a>
+        </li>
+      </ul>
+
+      <!-- Right slot (reserved for future: bell, avatar) -->
+      <div class="app-nav__right" aria-hidden="true"></div>
+
+      <!-- Hamburger (mobile) -->
+      <button
+        class="app-nav__hamburger"
+        id="hamburger-btn"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="app-nav__hamburger-bar"></span>
+        <span class="app-nav__hamburger-bar"></span>
+        <span class="app-nav__hamburger-bar"></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Mobile menu drawer (toggled by hamburger) -->
+  <div class="app-nav__mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-hidden="true">
+    <ul class="app-nav__mobile-links" role="list">
+      <li class="app-nav__mobile-link" data-route="/dashboard">
+        <a href="#/dashboard">Dashboard</a>
+      </li>
+      <li class="app-nav__mobile-link" data-route="/saved">
+        <a href="#/saved">Saved</a>
+      </li>
+      <li class="app-nav__mobile-link" data-route="/digest">
+        <a href="#/digest">Digest</a>
+      </li>
+      <li class="app-nav__mobile-link" data-route="/settings">
+        <a href="#/settings">Settings</a>
+      </li>
+      <li class="app-nav__mobile-link" data-route="/proof">
+        <a href="#/proof">Proof</a>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════
+       APP BODY — all route views rendered here
+  ══════════════════════════════════════════════ -->
+  <div class="app-body">
+
+    <!-- ── Route: / (Home) ─────────────────────── -->
+    <div class="route-view" data-view="/" id="view-home" role="main" aria-label="Home">
+      <div class="route-placeholder">
+        <span class="route-placeholder__eyebrow label text-muted">Home</span>
+        <h1 class="route-placeholder__heading">Job Notification Tracker</h1>
+        <p class="route-placeholder__subtext">
+          Your calm, intentional workspace for tracking job opportunities, alerts, and application proof.
+        </p>
+        <div class="route-placeholder__divider" aria-hidden="true"></div>
+        <div class="route-placeholder__region" aria-label="Content placeholder">
+          <span class="route-placeholder__region-label">Home Content</span>
+          <p class="route-placeholder__region-note">
+            This section will be built in the next step.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Route: /dashboard ───────────────────── -->
+    <div class="route-view" data-view="/dashboard" id="view-dashboard" role="main" aria-label="Dashboard">
+      <div class="route-placeholder">
+        <span class="route-placeholder__eyebrow label text-muted">Overview</span>
+        <h1 class="route-placeholder__heading">Dashboard</h1>
+        <p class="route-placeholder__subtext">
+          A high-level view of your active job notifications, recent matches, and daily digest summary.
+        </p>
+        <div class="route-placeholder__divider" aria-hidden="true"></div>
+        <div class="route-placeholder__region" aria-label="Content placeholder">
+          <span class="route-placeholder__region-label">Dashboard Content</span>
+          <p class="route-placeholder__region-note">
+            This section will be built in the next step.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Route: /saved ──────────────────────── -->
+    <div class="route-view" data-view="/saved" id="view-saved" role="main" aria-label="Saved jobs">
+      <div class="route-placeholder">
+        <span class="route-placeholder__eyebrow label text-muted">Bookmarks</span>
+        <h1 class="route-placeholder__heading">Saved Jobs</h1>
+        <p class="route-placeholder__subtext">
+          All positions you have bookmarked for review, comparison, or future application.
+        </p>
+        <div class="route-placeholder__divider" aria-hidden="true"></div>
+        <div class="route-placeholder__region" aria-label="Content placeholder">
+          <span class="route-placeholder__region-label">Saved Jobs Content</span>
+          <p class="route-placeholder__region-note">
+            This section will be built in the next step.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Route: /digest ────────────────────── -->
+    <div class="route-view" data-view="/digest" id="view-digest" role="main" aria-label="Digest">
+      <div class="route-placeholder">
+        <span class="route-placeholder__eyebrow label text-muted">Daily Summary</span>
+        <h1 class="route-placeholder__heading">Digest</h1>
+        <p class="route-placeholder__subtext">
+          Your curated daily email digest — manage frequency, sources, and keyword filters here.
+        </p>
+        <div class="route-placeholder__divider" aria-hidden="true"></div>
+        <div class="route-placeholder__region" aria-label="Content placeholder">
+          <span class="route-placeholder__region-label">Digest Content</span>
+          <p class="route-placeholder__region-note">
+            This section will be built in the next step.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Route: /settings ──────────────────── -->
+    <div class="route-view" data-view="/settings" id="view-settings" role="main" aria-label="Settings">
+      <div class="route-placeholder">
+        <span class="route-placeholder__eyebrow label text-muted">Configuration</span>
+        <h1 class="route-placeholder__heading">Settings</h1>
+        <p class="route-placeholder__subtext">
+          Control notification channels, alert rules, role preferences, and account details.
+        </p>
+        <div class="route-placeholder__divider" aria-hidden="true"></div>
+        <div class="route-placeholder__region" aria-label="Content placeholder">
+          <span class="route-placeholder__region-label">Settings Content</span>
+          <p class="route-placeholder__region-note">
+            This section will be built in the next step.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Route: /proof ─────────────────────── -->
+    <div class="route-view" data-view="/proof" id="view-proof" role="main" aria-label="Proof">
+      <div class="route-placeholder">
+        <span class="route-placeholder__eyebrow label text-muted">Verification</span>
+        <h1 class="route-placeholder__heading">Proof</h1>
+        <p class="route-placeholder__subtext">
+          Evidence log and checklist for every notification sent — confirm delivery, opens, and actions taken.
+        </p>
+        <div class="route-placeholder__divider" aria-hidden="true"></div>
+        <div class="route-placeholder__region" aria-label="Content placeholder">
+          <span class="route-placeholder__region-label">Proof Content</span>
+          <p class="route-placeholder__region-note">
+            This section will be built in the next step.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Route: /404 (Page Not Found) ────────── -->
+    <div class="route-view" data-view="/404" id="view-404" role="main" aria-label="Page not found">
+      <div class="route-placeholder">
+        <span class="route-placeholder__eyebrow label text-muted">404</span>
+        <h1 class="route-placeholder__heading">Page Not Found</h1>
+        <p class="route-placeholder__subtext">
+          The page you're looking for doesn't exist. Check the URL or use the navigation above.
+        </p>
+        <div class="route-placeholder__divider" aria-hidden="true"></div>
+        <div class="route-placeholder__region">
+          <span class="route-placeholder__region-label">Nothing here</span>
+          <p class="route-placeholder__region-note">
+            Try navigating to Dashboard, Saved, Digest, Settings, or Proof.
+          </p>
+          <a href="#/" style="margin-top: var(--space-2); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--color-accent); text-decoration: underline;">← Back to Home</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.app-body -->
+
+
+  <!-- ══════════════════════════════════════════════
+       HASH ROUTER
+       No libraries. No dependencies.
+       Reads window.location.hash → shows matching
+       route-view, marks matching nav links is-active.
+  ══════════════════════════════════════════════ -->
+  <script>
+    (() => {
+      'use strict';
+
+      // ── Route registry ────────────────────────────────
+      // key   : hash path   (what appears after "#")
+      // title : <title> tag value
+      const routes = {
+        '/':          { title: 'Home — Job Notification Tracker' },
+        '/dashboard': { title: 'Dashboard — Job Notification Tracker' },
+        '/saved':     { title: 'Saved Jobs — Job Notification Tracker' },
+        '/digest':    { title: 'Digest — Job Notification Tracker' },
+        '/settings':  { title: 'Settings — Job Notification Tracker' },
+        '/proof':     { title: 'Proof — Job Notification Tracker' },
+        '/404':       { title: 'Page Not Found — Job Notification Tracker' },
+      };
+
+      const defaultRoute = '/';
+
+      // ── DOM refs ──────────────────────────────────────
+      const allViews        = document.querySelectorAll('.route-view');
+      const desktopLinks    = document.querySelectorAll('#desktop-nav .app-nav__link');
+      const mobileLinks     = document.querySelectorAll('.app-nav__mobile-link');
+      const hamburgerBtn    = document.getElementById('hamburger-btn');
+      const mobileMenu      = document.getElementById('mobile-menu');
+
+      // ── Parse current hash → route path ──────────────
+      function getPath() {
+        const hash = window.location.hash; // e.g. "#/dashboard"
+        if (!hash || hash === '#') return defaultRoute;
+        const path = hash.startsWith('#') ? hash.slice(1) : hash;
+        // Unknown path → show 404, never a blank screen
+        return routes[path] ? path : '/404';
+      }
+
+      // ── Activate a route ──────────────────────────────
+      function navigate(path) {
+        const route = routes[path];
+        if (!route) return;
+
+        // 1. Update page title
+        document.title = route.title;
+
+        // 2. Show matching view, hide all others
+        allViews.forEach(view => {
+          const isActive = view.dataset.view === path;
+          view.classList.toggle('is-active', isActive);
+        });
+
+        // 3. Mark active desktop nav link
+        desktopLinks.forEach(li => {
+          const isActive = li.dataset.route === path;
+          li.classList.toggle('is-active', isActive);
+          const anchor = li.querySelector('a');
+          if (anchor) anchor.setAttribute('aria-current', isActive ? 'page' : 'false');
+        });
+
+        // 4. Mark active mobile nav link
+        mobileLinks.forEach(li => {
+          const isActive = li.dataset.route === path;
+          li.classList.toggle('is-active', isActive);
+          const anchor = li.querySelector('a');
+          if (anchor) anchor.setAttribute('aria-current', isActive ? 'page' : 'false');
+        });
+
+        // 5. Close mobile menu on navigate
+        closeMobileMenu();
+      }
+
+      // ── Mobile menu toggle ────────────────────────────
+      function closeMobileMenu() {
+        mobileMenu.classList.remove('is-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      }
+
+      function toggleMobileMenu() {
+        const isOpen = mobileMenu.classList.contains('is-open');
+        if (isOpen) {
+          closeMobileMenu();
+        } else {
+          mobileMenu.classList.add('is-open');
+          hamburgerBtn.setAttribute('aria-expanded', 'true');
+          mobileMenu.setAttribute('aria-hidden', 'false');
+        }
+      }
+
+      hamburgerBtn.addEventListener('click', toggleMobileMenu);
+
+      // Close mobile menu on Escape key
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeMobileMenu();
+      });
+
+      // Close mobile menu when clicking outside the nav
+      document.addEventListener('click', e => {
+        const nav = document.querySelector('.app-nav');
+        if (
+          mobileMenu.classList.contains('is-open') &&
+          !nav.contains(e.target) &&
+          !mobileMenu.contains(e.target)
+        ) {
+          closeMobileMenu();
+        }
+      });
+
+      // ── Hash change listener ──────────────────────────
+      window.addEventListener('hashchange', () => navigate(getPath()));
+
+      // ── Initial load ──────────────────────────────────
+      // If arriving with no hash, default to home without
+      // replacing browser history.
+      if (!window.location.hash || window.location.hash === '#') {
+        window.location.replace('#/');
+      }
+      navigate(getPath());
+
+    })();
+  </script>
+
+</body>
+</html>
