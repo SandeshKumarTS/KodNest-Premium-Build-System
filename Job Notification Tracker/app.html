@@ -393,15 +393,74 @@
     <!-- ── Route: /proof ─────────────────────── -->
     <div class="route-view" data-view="/proof" id="view-proof" role="main" aria-label="Proof">
       <div class="route-placeholder">
-        <span class="route-placeholder__eyebrow label text-muted">Verification</span>
+        <span class="route-placeholder__eyebrow label text-muted">Phase 9 &mdash; Final Submission</span>
         <h1 class="route-placeholder__heading">Proof</h1>
-        <p class="route-placeholder__subtext">Artifact collection — evidence that every notification was delivered, seen, and acted upon.</p>
+        <p class="route-placeholder__subtext">Artifact collection &mdash; links, completion status, and final submission export.</p>
         <div class="route-placeholder__divider" aria-hidden="true"></div>
-        <div class="empty-state">
-          <div class="empty-state__icon" aria-hidden="true">&#10003;</div>
-          <p class="empty-state__title">No artifacts yet.</p>
-          <p class="empty-state__body">Proof logs, delivery receipts, and action confirmations will be collected here once the system is live.</p>
+
+        <!-- Ship status badge -->
+        <div class="proof-status-row">
+          <span class="proof-status-label label text-muted">Project Status:</span>
+          <span class="proof-badge" id="proof-badge">Not Started</span>
         </div>
+
+        <!-- Step Completion Summary -->
+        <section class="proof-section" aria-label="Step Completion Summary">
+          <h2 class="proof-section__heading">Step Completion Summary</h2>
+          <ul class="proof-steps" id="proof-steps" role="list"></ul>
+        </section>
+
+        <!-- Artifact Inputs -->
+        <section class="proof-section" aria-label="Artifact Links">
+          <h2 class="proof-section__heading">Artifact Links</h2>
+          <p class="proof-section__desc">All 3 links required to unlock &ldquo;Shipped&rdquo; status.</p>
+
+          <div class="proof-field">
+            <label class="proof-field__label label" for="proof-lovable">Lovable Project Link</label>
+            <div class="proof-field__row">
+              <input id="proof-lovable" type="url" class="input proof-field__input" placeholder="https://lovable.dev/..." autocomplete="off" />
+              <button class="btn proof-field__save" data-proof-save="lovable">Save</button>
+            </div>
+            <span class="proof-field__error" id="proof-lovable-error" role="alert"></span>
+            <span class="proof-field__saved" id="proof-lovable-saved"></span>
+          </div>
+
+          <div class="proof-field">
+            <label class="proof-field__label label" for="proof-github">GitHub Repository Link</label>
+            <div class="proof-field__row">
+              <input id="proof-github" type="url" class="input proof-field__input" placeholder="https://github.com/..." autocomplete="off" />
+              <button class="btn proof-field__save" data-proof-save="github">Save</button>
+            </div>
+            <span class="proof-field__error" id="proof-github-error" role="alert"></span>
+            <span class="proof-field__saved" id="proof-github-saved"></span>
+          </div>
+
+          <div class="proof-field">
+            <label class="proof-field__label label" for="proof-deployed">Deployed URL</label>
+            <div class="proof-field__row">
+              <input id="proof-deployed" type="url" class="input proof-field__input" placeholder="https://your-app.vercel.app" autocomplete="off" />
+              <button class="btn proof-field__save" data-proof-save="deployed">Save</button>
+            </div>
+            <span class="proof-field__error" id="proof-deployed-error" role="alert"></span>
+            <span class="proof-field__saved" id="proof-deployed-saved"></span>
+          </div>
+        </section>
+
+        <!-- Final Submission -->
+        <section class="proof-section" aria-label="Final Submission">
+          <h2 class="proof-section__heading">Final Submission</h2>
+          <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;align-items:center;">
+            <button class="btn btn--primary" id="proof-copy-btn" type="button">&#128203; Copy Final Submission</button>
+            <span class="proof-copy-msg" id="proof-copy-msg" style="display:none;" aria-live="polite">&#10003; Copied!</span>
+          </div>
+          <pre class="proof-preview" id="proof-preview" aria-label="Submission preview"></pre>
+        </section>
+
+        <!-- Shipped message -->
+        <div id="proof-shipped-msg" class="proof-shipped-msg" style="display:none;" aria-live="polite">
+          Project 1 Shipped Successfully.
+        </div>
+
       </div>
     </div>
 
@@ -1209,6 +1268,9 @@
         if (path === '/jt/08-ship') {
           setTimeout(() => { if (window._renderShip) window._renderShip(); }, 0);
         }
+        if (path === '/proof') {
+          setTimeout(() => { if (window._renderProof) window._renderProof(); }, 0);
+        }
       }
 
       window.addEventListener('hashchange', () => {
@@ -1634,5 +1696,180 @@
   </script>
 
 
-</html>
+  <!-- ════════════════════════════════════════════════════════
+       PHASE 9 — PROOF PAGE + FINAL SUBMISSION
+  ════════════════════════════════════════════════════════ -->
+  <script>
+    (() => {
+      'use strict';
+
+      const PROOF_KEY      = 'jnt_proof_links';
+      const CHECKLIST_KEY9 = 'jnt_test_checklist';
+      const TOTAL_TESTS    = 10;
+
+      const STEPS = [
+        { label: 'Design System — tokens, base, components, layout, states',  done: () => true },
+        { label: 'Hash Router — 8 routes, no framework',                        done: () => true },
+        { label: 'Landing Page + Real Content',                                 done: () => true },
+        { label: '60-job Dataset + Dashboard + Filter + Modal',                 done: () => (window.JOBS || []).length >= 60 },
+        { label: 'Preferences Engine + Match Scoring',                          done: () => !!localStorage.getItem('jobTrackerPreferences') },
+        { label: 'Daily Digest Engine + Clipboard + Email',                     done: () => Object.keys(localStorage).some(k => k.startsWith('jobTrackerDigest_')) },
+        { label: 'Status Tracking + Toast Notifications',                       done: () => !!localStorage.getItem('jobTrackerStatus') },
+        { label: 'Test Checklist + Ship Lock',                                  done: () => { try { return JSON.parse(localStorage.getItem(CHECKLIST_KEY9)||'[]').length > 0; } catch { return false; } } },
+      ];
+
+      function getLinks() {
+        try { return JSON.parse(localStorage.getItem(PROOF_KEY) || '{}'); }
+        catch { return {}; }
+      }
+
+      function setLinks(obj) {
+        localStorage.setItem(PROOF_KEY, JSON.stringify(obj));
+      }
+
+      function isValidUrl(v) {
+        try { const u = new URL(v); return u.protocol === 'http:' || u.protocol === 'https:'; }
+        catch { return false; }
+      }
+
+      function getTestCount() {
+        try { return JSON.parse(localStorage.getItem(CHECKLIST_KEY9) || '[]').length; }
+        catch { return 0; }
+      }
+
+      // ── Compute overall ship status ───────────────────────────
+      function computeStatus(links, testCount) {
+        const hasAll3 = !!(links.lovable && links.github && links.deployed);
+        const allTests = testCount >= TOTAL_TESTS;
+        if (hasAll3 && allTests)   return 'Shipped';
+        if (hasAll3 || testCount > 0 || links.lovable || links.github || links.deployed)
+          return 'In Progress';
+        return 'Not Started';
+      }
+
+      // ── Build submission text ──────────────────────────────
+      function buildSubmissionText(links) {
+        return [
+          '------------------------------------------',
+          'Job Notification Tracker — Final Submission',
+          '',
+          'Lovable Project:',
+          links.lovable  || '(not provided)',
+          '',
+          'GitHub Repository:',
+          links.github   || '(not provided)',
+          '',
+          'Live Deployment:',
+          links.deployed || '(not provided)',
+          '',
+          'Core Features:',
+          '- Intelligent match scoring',
+          '- Daily digest simulation',
+          '- Status tracking',
+          '- Test checklist enforced',
+          '------------------------------------------',
+        ].join('\n');
+      }
+
+      // ── Main render ────────────────────────────────────────
+      function renderProof() {
+        const links     = getLinks();
+        const testCount = getTestCount();
+        const status    = computeStatus(links, testCount);
+
+        // ─ Badge ───────────────────────────────────────────
+        const badge = document.getElementById('proof-badge');
+        if (badge) {
+          badge.textContent = status;
+          badge.className   = 'proof-badge proof-badge--' +
+            (status === 'Shipped'     ? 'shipped' :
+             status === 'In Progress' ? 'progress' : 'not-started');
+        }
+
+        // ─ Shipped message ──────────────────────────────
+        const shipMsg = document.getElementById('proof-shipped-msg');
+        if (shipMsg) shipMsg.style.display = status === 'Shipped' ? '' : 'none';
+
+        // ─ Steps ──────────────────────────────────────────
+        const stepsList = document.getElementById('proof-steps');
+        if (stepsList) {
+          stepsList.innerHTML = STEPS.map((s, i) => {
+            const isDone = s.done();
+            return `
+              <li class="proof-step${isDone ? ' proof-step--done' : ''}" role="listitem">
+                <span class="proof-step__num">${String(i + 1).padStart(2, '0')}</span>
+                <span class="proof-step__label">${s.label}</span>
+                <span class="proof-step__status ${isDone ? 'proof-step__status--done' : 'proof-step__status--pending'}">
+                  ${isDone ? '&#10003; Completed' : 'Pending'}
+                </span>
+              </li>`;
+          }).join('');
+        }
+
+        // ─ Prefill inputs from localStorage ────────────────────
+        ['lovable','github','deployed'].forEach(key => {
+          const inp = document.getElementById(`proof-${key}`);
+          if (inp && links[key]) inp.value = links[key];
+          const savedEl = document.getElementById(`proof-${key}-saved`);
+          if (savedEl) savedEl.textContent = links[key] ? '\u2713 Saved' : '';
+        });
+
+        // ─ Submission preview ──────────────────────────────
+        const preview = document.getElementById('proof-preview');
+        if (preview) preview.textContent = buildSubmissionText(links);
+      }
+
+      // ── Save button handler (event delegation) ───────────────
+      document.addEventListener('click', e => {
+        const saveBtn = e.target.closest('[data-proof-save]');
+        if (!saveBtn) return;
+        const key = saveBtn.dataset.proofSave;
+        const inp = document.getElementById(`proof-${key}`);
+        const errEl  = document.getElementById(`proof-${key}-error`);
+        const savedEl = document.getElementById(`proof-${key}-saved`);
+        if (!inp) return;
+        const val = inp.value.trim();
+        if (!val || !isValidUrl(val)) {
+          if (errEl) errEl.textContent = 'Enter a valid URL (must start with https://).';
+          if (savedEl) savedEl.textContent = '';
+          return;
+        }
+        if (errEl) errEl.textContent = '';
+        const links = getLinks();
+        links[key] = val;
+        setLinks(links);
+        if (savedEl) savedEl.textContent = '\u2713 Saved';
+        renderProof();   // refresh badge + preview
+      });
+
+      // ── Copy final submission button ─────────────────────
+      const proofCopyBtn = document.getElementById('proof-copy-btn');
+      if (proofCopyBtn) {
+        proofCopyBtn.addEventListener('click', () => {
+          const text = buildSubmissionText(getLinks());
+          const msg  = document.getElementById('proof-copy-msg');
+          const doCopy = () => {
+            if (msg) { msg.style.display = ''; setTimeout(() => { msg.style.display = 'none'; }, 3000); }
+          };
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(doCopy).catch(() => {
+              fallbackCopy(text); doCopy();
+            });
+          } else { fallbackCopy(text); doCopy(); }
+        });
+      }
+
+      function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+      }
+
+      window._renderProof = renderProof;
+
+    })();
   </script>
+
+</body>
+</html>
