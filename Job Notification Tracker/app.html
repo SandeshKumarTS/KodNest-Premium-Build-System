@@ -413,10 +413,10 @@
         <!-- Artifact Inputs -->
         <section class="proof-section" aria-label="Artifact Links">
           <h2 class="proof-section__heading">Artifact Links</h2>
-          <p class="proof-section__desc">All 3 links required to unlock &ldquo;Shipped&rdquo; status.</p>
+          <p class="proof-section__desc">GitHub + Deployed required. Lovable is optional.</p>
 
           <div class="proof-field">
-            <label class="proof-field__label label" for="proof-lovable">Lovable Project Link</label>
+            <label class="proof-field__label label" for="proof-lovable">Lovable Project Link <span style="font-weight:400;color:var(--color-text-muted)">(optional)</span></label>
             <div class="proof-field__row">
               <input id="proof-lovable" type="url" class="input proof-field__input" placeholder="https://lovable.dev/..." autocomplete="off" />
               <button class="btn proof-field__save" data-proof-save="lovable">Save</button>
@@ -1791,10 +1791,10 @@
 
       // ── Compute overall ship status ───────────────────────────
       function computeStatus(links, testCount) {
-        const hasAll3 = !!(links.lovable && links.github && links.deployed);
+        const hasRequired = !!(links.github && links.deployed);
         const allTests = testCount >= TOTAL_TESTS;
-        if (hasAll3 && allTests)   return 'Shipped';
-        if (hasAll3 || testCount > 0 || links.lovable || links.github || links.deployed)
+        if (hasRequired && allTests)   return 'Shipped';
+        if (hasRequired || testCount > 0 || links.lovable || links.github || links.deployed)
           return 'In Progress';
         return 'Not Started';
       }
@@ -1805,9 +1805,7 @@
           '------------------------------------------',
           'Job Notification Tracker — Final Submission',
           '',
-          'Lovable Project:',
-          links.lovable  || '(not provided)',
-          '',
+          ...(links.lovable ? ['Lovable Project:', links.lovable, ''] : []),
           'GitHub Repository:',
           links.github   || '(not provided)',
           '',
