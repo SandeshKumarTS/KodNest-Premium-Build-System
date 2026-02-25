@@ -464,6 +464,50 @@
       </div>
     </div>
 
+    <!-- ── Route: /jt/07-test (Test Checklist) ────────── -->
+    <div class="route-view" data-view="/jt/07-test" id="view-test" role="main" aria-label="Test Checklist">
+      <div class="route-placeholder">
+        <span class="route-placeholder__eyebrow label text-muted">Phase 8</span>
+        <h1 class="route-placeholder__heading">Test Checklist</h1>
+        <p class="route-placeholder__subtext">Verify every feature works before shipping.</p>
+        <div class="route-placeholder__divider" aria-hidden="true"></div>
+        <div class="tc-summary">
+          <p id="tc-score" class="tc-summary__score">Tests Passed: 0 / 10</p>
+          <p id="tc-warn" class="tc-summary__warn">Complete all 10 tests before shipping.</p>
+        </div>
+        <ol id="tc-list" class="tc-list" role="list"></ol>
+        <div style="margin-top:var(--space-4)">
+          <button id="tc-reset-btn" class="btn" type="button">Reset All</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Route: /jt/08-ship (Ship) ────────── -->
+    <div class="route-view" data-view="/jt/08-ship" id="view-ship" role="main" aria-label="Ship">
+      <div class="route-placeholder">
+        <span class="route-placeholder__eyebrow label text-muted">Phase 8</span>
+        <div class="route-placeholder__divider" aria-hidden="true"></div>
+        <!-- Locked state: not all tests passed -->
+        <div id="ship-locked" class="ship-locked">
+          <div class="ship-locked__icon" aria-hidden="true">🔒</div>
+          <h1 class="ship-locked__title">Ship</h1>
+          <p class="ship-locked__body">Complete all 10 tests to unlock ship.</p>
+          <div class="ship-locked__progress-wrap">
+            <div id="ship-progress-bar" class="ship-locked__progress-bar" style="width:0%"></div>
+          </div>
+          <p id="ship-progress-label" class="ship-locked__progress-label">0 / 10 tests passed</p>
+          <a href="#/jt/07-test" class="btn btn--primary" style="margin-top:var(--space-4)">Go to Test Checklist →</a>
+        </div>
+        <!-- Unlocked state: all 10 tests passed -->
+        <div id="ship-unlocked" class="ship-unlocked" style="display:none;">
+          <div class="ship-unlocked__icon" aria-hidden="true">🚀</div>
+          <h1 class="ship-unlocked__title">Ready to Ship!</h1>
+          <p class="ship-unlocked__body">All 10 tests passed. Your project is ready.</p>
+          <a href="#/proof" class="btn btn--primary" style="margin-top:var(--space-4)">View Proof of Completion →</a>
+        </div>
+      </div>
+    </div>
+
     <!-- ── Route: /404 (Page Not Found) ────────── -->
     <div class="route-view" data-view="/404" id="view-404" role="main" aria-label="Page not found">
       <div class="route-placeholder">
