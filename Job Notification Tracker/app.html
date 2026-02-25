@@ -1692,6 +1692,14 @@
       window._renderTest = renderTest;
       window._renderShip = renderShip;
 
+      // Self-init: router has already fired before this script ran,
+      // so render immediately if we're already on one of these routes.
+      (() => {
+        const h = (window.location.hash || '').slice(1);
+        if (h === '/jt/07-test') renderTest();
+        if (h === '/jt/08-ship') renderShip();
+      })();
+
     })();
   </script>
 
@@ -1867,6 +1875,9 @@
       }
 
       window._renderProof = renderProof;
+
+      // Self-init: render immediately if already on /proof
+      if ((window.location.hash || '').slice(1) === '/proof') renderProof();
 
     })();
   </script>
