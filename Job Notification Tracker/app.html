@@ -733,9 +733,12 @@
       });
 
       // Filter inputs — live filtering
+      // keyword uses 'input' for instant search; selects use 'change'
       ['filter-keyword','filter-location','filter-mode','filter-experience','filter-source','filter-sort'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.addEventListener('input', applyFilters);
+        if (!el) return;
+        const evt = el.tagName === 'INPUT' ? 'input' : 'change';
+        el.addEventListener(evt, applyFilters);
       });
 
       // ── Integrate with router ──────────────────────────────────
