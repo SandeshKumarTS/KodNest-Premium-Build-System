@@ -517,33 +517,47 @@
         return d.innerHTML;
       }
 
+      // ── Defensive field fallbacks ───────────────────────────────
+      function safe(val, fallback) {
+        return (val !== undefined && val !== null && String(val).trim() !== '') ? val : fallback;
+      }
+
       // ── Build a single job card HTML string ────────────────────
       function buildCard(job) {
         const isSaved = saved.has(job.id);
+        const title      = safe(job.title,      'Untitled Role');
+        const company    = safe(job.company,    'Unknown Company');
+        const location   = safe(job.location,   'Location not listed');
+        const experience = safe(job.experience, 'Experience not listed');
+        const mode       = safe(job.mode,       'Onsite');
+        const salary     = safe(job.salaryRange,'Salary not disclosed');
+        const source     = safe(job.source,     'Source unknown');
+        const applyUrl   = safe(job.applyUrl,   '#');
+        const posted     = (typeof job.postedDaysAgo === 'number') ? job.postedDaysAgo : null;
         return `
           <article class="job-card" role="listitem" data-id="${job.id}">
             <div class="job-card__header">
               <div class="job-card__titles">
-                <span class="job-card__title">${esc(job.title)}</span>
-                <span class="job-card__company">${esc(job.company)}</span>
+                <span class="job-card__title">${esc(title)}</span>
+                <span class="job-card__company">${esc(company)}</span>
               </div>
-              <span class="job-card__source">${esc(job.source)}</span>
+              <span class="job-card__source">${esc(source)}</span>
             </div>
             <div class="job-card__meta">
-              <span class="job-card__meta-item">${esc(job.location)}</span>
-              <span class="job-card__meta-item">${esc(job.experience)}</span>
-              <span class="job-card__mode ${modeClass(job.mode)}">${esc(job.mode)}</span>
+              <span class="job-card__meta-item">${esc(location)}</span>
+              <span class="job-card__meta-item">${esc(experience)}</span>
+              <span class="job-card__mode ${modeClass(mode)}">${esc(mode)}</span>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="job-card__salary">${esc(job.salaryRange)}</span>
-              <span class="job-card__posted">${postedLabel(job.postedDaysAgo)}</span>
+              <span class="job-card__salary">${esc(salary)}</span>
+              <span class="job-card__posted">${posted !== null ? postedLabel(posted) : 'Recently posted'}</span>
             </div>
             <div class="job-card__footer">
-              <button class="job-card__btn job-card__btn--view" data-id="${job.id}" aria-label="View details for ${esc(job.title)}">View</button>
-              <button class="job-card__btn job-card__btn--save ${isSaved ? 'is-saved' : ''}" data-id="${job.id}" aria-label="${isSaved ? 'Unsave' : 'Save'} ${esc(job.title)}" aria-pressed="${isSaved}">
+              <button class="job-card__btn job-card__btn--view" data-id="${job.id}" aria-label="View details for ${esc(title)}">View</button>
+              <button class="job-card__btn job-card__btn--save ${isSaved ? 'is-saved' : ''}" data-id="${job.id}" aria-label="${isSaved ? 'Unsave' : 'Save'} ${esc(title)}" aria-pressed="${isSaved}">
                 ${isSaved ? '&#9829; Saved' : '&#9825; Save'}
               </button>
-              <a class="job-card__btn job-card__btn--apply" href="${esc(job.applyUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Apply for ${esc(job.title)}">Apply &#8599;</a>
+              <a class="job-card__btn job-card__btn--apply" href="${esc(applyUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Apply for ${esc(title)}">Apply &#8599;</a>
             </div>
           </article>
         `;
@@ -662,23 +676,25 @@
         if (!job) return;
 
         const modal = document.getElementById('job-modal');
-        document.getElementById('modal-title').textContent   = job.title;
-        document.getElementById('modal-company').textContent = job.company;
-        document.getElementById('modal-description').textContent = job.description;
+        document.getElementById('modal-title').textContent   = safe(job.title,      'Untitled Role');
+        document.getElementById('modal-company').textContent = safe(job.company,    'Unknown Company');
+        document.getElementById('modal-description').textContent = safe(job.description, 'No description available.');
 
         // Meta grid
+        const posted = (typeof job.postedDaysAgo === 'number') ? postedLabel(job.postedDaysAgo) : 'Recently';
         document.getElementById('modal-meta').innerHTML = `
-          <div class="modal__meta-item"><span class="modal__meta-label">Location</span><span class="modal__meta-value">${esc(job.location)}</span></div>
-          <div class="modal__meta-item"><span class="modal__meta-label">Mode</span><span class="modal__meta-value">${esc(job.mode)}</span></div>
-          <div class="modal__meta-item"><span class="modal__meta-label">Experience</span><span class="modal__meta-value">${esc(job.experience)}</span></div>
-          <div class="modal__meta-item"><span class="modal__meta-label">Salary</span><span class="modal__meta-value">${esc(job.salaryRange)}</span></div>
-          <div class="modal__meta-item"><span class="modal__meta-label">Source</span><span class="modal__meta-value">${esc(job.source)}</span></div>
-          <div class="modal__meta-item"><span class="modal__meta-label">Posted</span><span class="modal__meta-value">${postedLabel(job.postedDaysAgo)}</span></div>
+          <div class="modal__meta-item"><span class="modal__meta-label">Location</span><span class="modal__meta-value">${esc(safe(job.location,'Not listed'))}</span></div>
+          <div class="modal__meta-item"><span class="modal__meta-label">Mode</span><span class="modal__meta-value">${esc(safe(job.mode,'Not listed'))}</span></div>
+          <div class="modal__meta-item"><span class="modal__meta-label">Experience</span><span class="modal__meta-value">${esc(safe(job.experience,'Not listed'))}</span></div>
+          <div class="modal__meta-item"><span class="modal__meta-label">Salary</span><span class="modal__meta-value">${esc(safe(job.salaryRange,'Salary not disclosed'))}</span></div>
+          <div class="modal__meta-item"><span class="modal__meta-label">Source</span><span class="modal__meta-value">${esc(safe(job.source,'Unknown'))}</span></div>
+          <div class="modal__meta-item"><span class="modal__meta-label">Posted</span><span class="modal__meta-value">${posted}</span></div>
         `;
 
         // Skills
+        const skills = Array.isArray(job.skills) && job.skills.length ? job.skills : ['No skills listed'];
         document.getElementById('modal-skills').innerHTML =
-          job.skills.map(s => `<span class="modal__skill-tag">${esc(s)}</span>`).join('');
+          skills.map(s => `<span class="modal__skill-tag">${esc(s)}</span>`).join('');
 
         // Footer buttons
         const isSaved = saved.has(id);

@@ -471,7 +471,7 @@ window.JOBS = [
   },
   {
     id: 34,
-    title: "React Developer (1-3 yrs)",
+    title: "React Developer — Real-Time UI (1-3 yrs)",
     company: "Zepto",
     location: "Bangalore",
     mode: "Hybrid",
