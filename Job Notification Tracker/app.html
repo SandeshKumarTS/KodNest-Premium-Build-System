@@ -177,6 +177,7 @@
             <option value="Selected">Selected</option>
           </select>
           <span class="filter-bar__count" id="filter-count" aria-live="polite"></span>
+          <button id="filter-clear-btn" class="btn filter-bar__clear" type="button" style="display:none;" aria-label="Clear all filters">&#10005; Clear All</button>
         </div>
         <!-- Match threshold toggle -->
         <div class="filter-bar__row2">
@@ -781,6 +782,19 @@
         if (banner) banner.style.display = hasP ? 'none' : '';
         renderDashboard(scored);
         updateAllSaveButtons();
+        // Show/hide Clear All button based on whether any filter is active
+        const anyActive = [
+          document.getElementById('filter-keyword')?.value || '',
+          document.getElementById('filter-location')?.value || '',
+          document.getElementById('filter-mode')?.value || '',
+          document.getElementById('filter-experience')?.value || '',
+          document.getElementById('filter-source')?.value || '',
+          document.getElementById('filter-status')?.value || ''
+        ].some(v => v !== '') ||
+          (document.getElementById('filter-sort')?.value || 'latest') !== 'latest' ||
+          (document.getElementById('match-toggle')?.checked || false);
+        const clearBtn = document.getElementById('filter-clear-btn');
+        if (clearBtn) clearBtn.style.display = anyActive ? '' : 'none';
       }
 
       // ── Update all save button states (after toggle) ───────────
@@ -1130,6 +1144,25 @@
           if (modal && modal.classList.contains('is-open')) closeModal();
         }
       });
+
+      // ── Clear All filters button ────────────────────────────
+      const filterClearBtn = document.getElementById('filter-clear-btn');
+      if (filterClearBtn) {
+        filterClearBtn.addEventListener('click', () => {
+          const kw = document.getElementById('filter-keyword');
+          if (kw) kw.value = '';
+          ['filter-location','filter-mode','filter-experience','filter-source','filter-status'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+          });
+          const sortEl = document.getElementById('filter-sort');
+          if (sortEl) sortEl.value = 'latest';
+          const toggle = document.getElementById('match-toggle');
+          if (toggle) toggle.checked = false;
+          filterClearBtn.style.display = 'none';
+          applyFilters();
+        });
+      }
 
       // Filter inputs — live filtering
       // keyword uses 'input' for instant search; selects use 'change'

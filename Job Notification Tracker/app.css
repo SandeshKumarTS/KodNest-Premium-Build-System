@@ -1244,6 +1244,24 @@
    PHASE 7 — STATUS TRACKING, TOAST & DIGEST STATUS UPDATES
 ═══════════════════════════════════════════════════════════════ */
 
+/* ── Filter bar: Clear All button ────────────────────────── */
+.filter-bar__clear {
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-2);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 150ms, color 150ms;
+}
+.filter-bar__clear:hover {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
 /* ── Status button group on job cards ─────────────────────── */
 .status-group {
   display: flex;
