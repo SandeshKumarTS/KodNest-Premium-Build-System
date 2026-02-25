@@ -213,13 +213,51 @@
       <div class="route-placeholder">
         <span class="route-placeholder__eyebrow label text-muted">Daily Summary</span>
         <h1 class="route-placeholder__heading">Digest</h1>
-        <p class="route-placeholder__subtext">Your curated daily briefing — top matched roles delivered at 9AM.</p>
+        <p class="route-placeholder__subtext">Your curated daily briefing &mdash; top matched roles delivered at 9AM.</p>
         <div class="route-placeholder__divider" aria-hidden="true"></div>
-        <div class="empty-state">
-          <div class="empty-state__icon" aria-hidden="true">&#9728;</div>
-          <p class="empty-state__title">No digest yet.</p>
-          <p class="empty-state__body">Your first digest will be generated once your preferences are saved and jobs are tracked.</p>
+
+        <!-- No-prefs blocker -->
+        <div id="digest-no-prefs" class="empty-state" style="display:none;">
+          <div class="empty-state__icon" aria-hidden="true">&#9432;</div>
+          <p class="empty-state__title">Preferences required.</p>
+          <p class="empty-state__body">Set preferences to generate a personalized digest. <a href="#/settings" style="color:var(--color-accent);">Go to Settings &rarr;</a></p>
         </div>
+
+        <!-- Generate button area -->
+        <div id="digest-generate-area" style="display:none;">
+          <button class="btn btn--primary" id="digest-generate-btn">Generate Today&#39;s 9AM Digest (Simulated)</button>
+          <p class="digest-sim-note">Demo Mode: Daily 9AM trigger simulated manually.</p>
+        </div>
+
+        <!-- Digest email card -->
+        <div id="digest-card" class="digest-card" style="display:none;" aria-live="polite">
+          <div class="digest-card__header">
+            <p class="digest-card__eyebrow label">9AM DIGEST</p>
+            <h2 class="digest-card__title">Top 10 Jobs For You</h2>
+            <p class="digest-card__date" id="digest-date"></p>
+          </div>
+          <ol class="digest-list" id="digest-list"></ol>
+          <div class="digest-card__footer">
+            <p class="digest-card__footer-note">This digest was generated based on your preferences.</p>
+          </div>
+        </div>
+
+        <!-- No matches state -->
+        <div id="digest-no-matches" class="empty-state" style="display:none;">
+          <div class="empty-state__icon" aria-hidden="true">&#9744;</div>
+          <p class="empty-state__title">No matching roles today.</p>
+          <p class="empty-state__body">No roles match your current preferences. Check again tomorrow or <a href="#/settings" style="color:var(--color-accent);">adjust preferences</a>.</p>
+        </div>
+
+        <!-- Action buttons -->
+        <div id="digest-actions" class="digest-actions" style="display:none;">
+          <button class="btn" id="digest-copy-btn">&#128203; Copy Digest to Clipboard</button>
+          <a class="btn" id="digest-email-btn" href="#">&#9993; Create Email Draft</a>
+        </div>
+
+        <!-- Copy feedback -->
+        <p id="digest-copy-msg" class="digest-copy-msg" style="display:none;" aria-live="polite">&#10003; Copied to clipboard!</p>
+
       </div>
     </div>
 
