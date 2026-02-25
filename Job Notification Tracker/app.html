@@ -44,6 +44,12 @@
         <li class="app-nav__link" data-route="/proof">
           <a href="#/proof">Proof</a>
         </li>
+        <li class="app-nav__link" data-route="/jt/07-test">
+          <a href="#/jt/07-test">Test</a>
+        </li>
+        <li class="app-nav__link" data-route="/jt/08-ship">
+          <a href="#/jt/08-ship">Ship</a>
+        </li>
       </ul>
 
       <!-- Right slot (reserved for future: bell, avatar) -->
@@ -82,6 +88,12 @@
       </li>
       <li class="app-nav__mobile-link" data-route="/proof">
         <a href="#/proof">Proof</a>
+      </li>
+      <li class="app-nav__mobile-link" data-route="/jt/07-test">
+        <a href="#/jt/07-test">Test</a>
+      </li>
+      <li class="app-nav__mobile-link" data-route="/jt/08-ship">
+        <a href="#/jt/08-ship">Ship</a>
       </li>
     </ul>
   </div>
@@ -460,13 +472,15 @@
       // key   : hash path   (what appears after "#")
       // title : <title> tag value
       const routes = {
-        '/':          { title: 'Home — Job Notification Tracker' },
-        '/dashboard': { title: 'Dashboard — Job Notification Tracker' },
-        '/saved':     { title: 'Saved Jobs — Job Notification Tracker' },
-        '/digest':    { title: 'Digest — Job Notification Tracker' },
-        '/settings':  { title: 'Settings — Job Notification Tracker' },
-        '/proof':     { title: 'Proof — Job Notification Tracker' },
-        '/404':       { title: 'Page Not Found — Job Notification Tracker' },
+        '/':              { title: 'Home — Job Notification Tracker' },
+        '/dashboard':     { title: 'Dashboard — Job Notification Tracker' },
+        '/saved':         { title: 'Saved Jobs — Job Notification Tracker' },
+        '/digest':        { title: 'Digest — Job Notification Tracker' },
+        '/settings':      { title: 'Settings — Job Notification Tracker' },
+        '/proof':         { title: 'Proof — Job Notification Tracker' },
+        '/jt/07-test':    { title: 'Test Checklist — Job Notification Tracker' },
+        '/jt/08-ship':    { title: 'Ship — Job Notification Tracker' },
+        '/404':           { title: 'Page Not Found — Job Notification Tracker' },
       };
 
       const defaultRoute = '/';
@@ -1189,6 +1203,12 @@
         if (path === '/settings') {
           setTimeout(() => prefillSettings(), 0);
         }
+        if (path === '/jt/07-test') {
+          setTimeout(() => { if (window._renderTest) window._renderTest(); }, 0);
+        }
+        if (path === '/jt/08-ship') {
+          setTimeout(() => { if (window._renderShip) window._renderShip(); }, 0);
+        }
       }
 
       window.addEventListener('hashchange', () => {
@@ -1475,6 +1495,144 @@
   <!-- ── Toast notification (Phase 7) ──────────────────── -->
   <div id="status-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
 
-</body>
+
+  <!-- ════════════════════════════════════════════════════════
+       PHASE 8 — TEST CHECKLIST + SHIP LOCK
+  ════════════════════════════════════════════════════════ -->
+  <script>
+    (() => {
+      'use strict';
+
+      const CHECKLIST_KEY = 'jnt_test_checklist';
+      const TOTAL = 10;
+
+      const ITEMS = [
+        { id: 'pref-persist',    label: 'Preferences persist after refresh',       tip: 'Settings → save prefs → refresh → re-open Settings. Values remain.' },
+        { id: 'match-score',     label: 'Match score calculates correctly',         tip: 'Set a keyword matching a job title. That job shows a colored badge on Dashboard.' },
+        { id: 'toggle-works',   label: '“Show only matches” toggle works',          tip: 'Enable threshold toggle on Dashboard. Only jobs at/above your score appear.' },
+        { id: 'save-persist',   label: 'Save job persists after refresh',           tip: 'Save a job → refresh → go to Saved. Job is still listed.' },
+        { id: 'apply-tab',      label: 'Apply opens in new tab',                    tip: 'Click Apply ↗ on any card. Should open in a new browser tab.' },
+        { id: 'status-persist', label: 'Status update persists after refresh',      tip: 'Set a job to Applied → refresh. Still shows Applied.' },
+        { id: 'status-filter',  label: 'Status filter works correctly',             tip: 'Mark 2+ jobs Applied. Filter by Applied. Only those jobs show.' },
+        { id: 'digest-top10',   label: 'Digest generates top 10 by score',          tip: 'Go to Digest → generate. List shows ≤10 jobs sorted by match score.' },
+        { id: 'digest-persist', label: 'Digest persists for the day',               tip: 'Generate digest → refresh → visit Digest. Same list loads without clicking Generate.' },
+        { id: 'no-errors',      label: 'No console errors on main pages',           tip: 'Open DevTools (F12) → visit /, /dashboard, /saved, /digest, /settings. No red errors.' },
+      ];
+
+      function getChecked() {
+        try {
+          const raw = localStorage.getItem(CHECKLIST_KEY);
+          return new Set(raw ? JSON.parse(raw) : []);
+        } catch { return new Set(); }
+      }
+
+      function setChecked(set) {
+        localStorage.setItem(CHECKLIST_KEY, JSON.stringify([...set]));
+      }
+
+      let checked = getChecked();
+
+      // ── Render the checklist page ────────────────────────────
+      function renderTest() {
+        checked = getChecked();
+        const count = checked.size;
+
+        const scoreEl = document.getElementById('tc-score');
+        if (scoreEl) scoreEl.textContent = `Tests Passed: ${count} / ${TOTAL}`;
+
+        const warnEl = document.getElementById('tc-warn');
+        if (warnEl) warnEl.style.display = count < TOTAL ? '' : 'none';
+
+        const scoreSpan = document.getElementById('tc-score');
+        if (scoreSpan) {
+          scoreSpan.className = 'tc-summary__score' + (count === TOTAL ? ' tc-summary__score--all' : '');
+        }
+
+        const list = document.getElementById('tc-list');
+        if (!list) return;
+        list.innerHTML = ITEMS.map((item, i) => {
+          const isChecked = checked.has(item.id);
+          return `
+            <li class="tc-item${isChecked ? ' tc-item--done' : ''}" role="listitem">
+              <label class="tc-item__label">
+                <input
+                  type="checkbox"
+                  class="tc-item__checkbox"
+                  data-tc-id="${item.id}"
+                  ${isChecked ? 'checked' : ''}
+                  aria-label="Test ${i + 1}: ${item.label}"
+                />
+                <span class="tc-item__num">${String(i + 1).padStart(2, '0')}</span>
+                <span class="tc-item__text">${item.label}</span>
+              </label>
+              <button
+                class="tc-item__tip-btn"
+                type="button"
+                aria-label="How to test: ${item.label}"
+                title="${item.tip}"
+              >?</button>
+              <span class="tc-item__tip-text" role="tooltip">${item.tip}</span>
+            </li>`;
+        }).join('');
+      }
+
+      // ── Render the ship lock / unlock page ───────────────────
+      function renderShip() {
+        checked = getChecked();
+        const count = checked.size;
+        const allPassed = count >= TOTAL;
+
+        const lockedEl   = document.getElementById('ship-locked');
+        const unlockedEl = document.getElementById('ship-unlocked');
+        if (lockedEl)   lockedEl.style.display   = allPassed ? 'none' : '';
+        if (unlockedEl) unlockedEl.style.display = allPassed ? '' : 'none';
+
+        const bar   = document.getElementById('ship-progress-bar');
+        const label = document.getElementById('ship-progress-label');
+        if (bar)   bar.style.width   = `${Math.round((count / TOTAL) * 100)}%`;
+        if (label) label.textContent = `${count} / ${TOTAL} tests passed`;
+      }
+
+      // ── Event delegation for checklist checkboxes ──────────────
+      document.addEventListener('change', e => {
+        const cb = e.target.closest('[data-tc-id]');
+        if (!cb) return;
+        checked = getChecked();
+        if (cb.checked) { checked.add(cb.dataset.tcId); }
+        else            { checked.delete(cb.dataset.tcId); }
+        setChecked(checked);
+        renderTest();
+      });
+
+      // ── Tooltip button toggle ───────────────────────────────
+      document.addEventListener('click', e => {
+        const tipBtn = e.target.closest('.tc-item__tip-btn');
+        if (!tipBtn) return;
+        const li  = tipBtn.closest('.tc-item');
+        const tip = li && li.querySelector('.tc-item__tip-text');
+        if (!tip) return;
+        const isOpen = tip.classList.contains('is-open');
+        // Close all others first
+        document.querySelectorAll('.tc-item__tip-text.is-open').forEach(t => t.classList.remove('is-open'));
+        if (!isOpen) tip.classList.add('is-open');
+      });
+
+      // ── Reset button ───────────────────────────────────────
+      const resetBtn = document.getElementById('tc-reset-btn');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          localStorage.removeItem(CHECKLIST_KEY);
+          checked = new Set();
+          renderTest();
+        });
+      }
+
+      window._renderTest = renderTest;
+      window._renderShip = renderShip;
+
+    })();
+  </script>
+
+
 </html>
   </script>
