@@ -169,6 +169,13 @@
             <option value="score">Match Score &darr;</option>
             <option value="salary">Salary &darr;</option>
           </select>
+          <select id="filter-status" class="select filter-bar__select" aria-label="Filter by application status">
+            <option value="">All Statuses</option>
+            <option value="Not Applied">Not Applied</option>
+            <option value="Applied">Applied</option>
+            <option value="Rejected">Rejected</option>
+            <option value="Selected">Selected</option>
+          </select>
           <span class="filter-bar__count" id="filter-count" aria-live="polite"></span>
         </div>
         <!-- Match threshold toggle -->
@@ -257,6 +264,12 @@
 
         <!-- Copy feedback -->
         <p id="digest-copy-msg" class="digest-copy-msg" style="display:none;" aria-live="polite">&#10003; Copied to clipboard!</p>
+
+        <!-- Recent Status Updates (Phase 7) -->
+        <div id="digest-status-section" class="digest-status-section" style="display:none;">
+          <h3 class="digest-status__heading">Recent Status Updates</h3>
+          <ul id="digest-status-list" class="digest-status-list"></ul>
+        </div>
 
       </div>
     </div>
@@ -569,6 +582,31 @@
       'use strict';
 
       const STORAGE_KEY = 'jnt_saved_jobs';
+      const STATUS_KEY  = 'jobTrackerStatus';
+
+      // ── Status tracking ────────────────────────────────────────
+      function getStatuses() {
+        try {
+          const raw = localStorage.getItem(STATUS_KEY);
+          return raw ? JSON.parse(raw) : {};
+        } catch { return {}; }
+      }
+
+      function setStatuses(obj) {
+        localStorage.setItem(STATUS_KEY, JSON.stringify(obj));
+      }
+
+      let statuses = getStatuses();
+
+      function getStatus(id) {
+        const entry = statuses[id];
+        return (entry && entry.status) ? entry.status : 'Not Applied';
+      }
+
+      function setStatus(id, newStatus) {
+        statuses[id] = { status: newStatus, date: new Date().toISOString().slice(0, 10) };
+        setStatuses(statuses);
+      }
 
       // ── Saved jobs (Set of ids, persisted to localStorage) ────
       function getSaved() {
@@ -609,7 +647,8 @@
       // ── Build a single job card HTML string ────────────────────
       // score: number (0-100) | null (no prefs set)
       function buildCard(job, score) {
-        const isSaved = saved.has(job.id);
+        const isSaved      = saved.has(job.id);
+        const currentStatus = getStatus(job.id);
         const title      = safe(job.title,      'Untitled Role');
         const company    = safe(job.company,    'Unknown Company');
         const location   = safe(job.location,   'Location not listed');
@@ -658,6 +697,16 @@
               </button>
               <a class="job-card__btn job-card__btn--apply" href="${esc(applyUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Apply for ${esc(title)}">Apply &#8599;</a>
             </div>
+            <div class="status-group" role="group" aria-label="Application status for ${esc(title)}">
+              ${['Not Applied','Applied','Rejected','Selected'].map(s => {
+                const isCur = s === currentStatus;
+                const cls   = s === 'Applied'  ? 'status-btn--applied'
+                            : s === 'Rejected' ? 'status-btn--rejected'
+                            : s === 'Selected' ? 'status-btn--selected'
+                            :                   'status-btn--not-applied';
+                return `<button class="status-btn ${cls}${isCur ? ' is-current' : ''}" data-id="${job.id}" data-status="${s}" aria-pressed="${isCur}">${s}</button>`;
+              }).join('')}
+            </div>
           </article>
         `;
       }
@@ -687,7 +736,8 @@
         const grid  = document.getElementById('saved-grid');
         const empty = document.getElementById('saved-empty');
         if (!grid) return;
-        saved = getSaved();
+        saved    = getSaved();
+        statuses = getStatuses();
         const savedJobs = (window.JOBS || []).filter(j => saved.has(j.id));
         if (savedJobs.length === 0) {
           grid.innerHTML = '';
@@ -742,6 +792,16 @@
           btn.setAttribute('aria-pressed', is);
           btn.innerHTML = is ? '&#9829; Saved' : '&#9825; Save';
         });
+      }
+
+      // ── Toast notification ─────────────────────────────────────
+      function showToast(message) {
+        const toast = document.getElementById('status-toast');
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add('is-visible');
+        clearTimeout(toast._toastTimer);
+        toast._toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 3000);
       }
 
       // ── Toggle save ────────────────────────────────────────────
@@ -898,6 +958,9 @@
         const srt = (document.getElementById('filter-sort')?.value      || 'latest');
         const matchOnly  = document.getElementById('match-toggle')?.checked || false;
         const threshold  = hasP ? (prefs.minMatchScore ?? 40) : 0;
+        const statusF    = document.getElementById('filter-status')?.value || '';
+
+        statuses = getStatuses();   // refresh from localStorage
 
         let jobs = (window.JOBS || []).filter(j => {
           if (kw  && !j.title.toLowerCase().includes(kw) &&
@@ -906,6 +969,7 @@
           if (mod && (j.mode       || '').toLowerCase() !== mod)      return false;
           if (exp && (j.experience || '').toLowerCase() !== exp)      return false;
           if (src && (j.source     || '').toLowerCase() !== src)      return false;
+          if (statusF && getStatus(j.id) !== statusF)                 return false;
           return true;
         });
 
@@ -1023,6 +1087,23 @@
 
       // ── Event delegation — dashboard + saved grids ─────────────
       document.addEventListener('click', e => {
+        // Status button
+        const statusBtn = e.target.closest('.status-btn');
+        if (statusBtn) {
+          const id = parseInt(statusBtn.dataset.id, 10);
+          const st = statusBtn.dataset.status;
+          setStatus(id, st);
+          // Update all status buttons for this job in the DOM
+          document.querySelectorAll(`.status-btn[data-id="${id}"]`).forEach(btn => {
+            const isCur = btn.dataset.status === st;
+            btn.classList.toggle('is-current', isCur);
+            btn.setAttribute('aria-pressed', String(isCur));
+          });
+          // Show toast for non-default status
+          if (st !== 'Not Applied') showToast(`Status updated: ${st}`);
+          return;
+        }
+
         // View button
         const viewBtn = e.target.closest('.job-card__btn--view');
         if (viewBtn) { openModal(parseInt(viewBtn.dataset.id, 10)); return; }
@@ -1052,7 +1133,7 @@
 
       // Filter inputs — live filtering
       // keyword uses 'input' for instant search; selects use 'change'
-      ['filter-keyword','filter-location','filter-mode','filter-experience','filter-source','filter-sort'].forEach(id => {
+      ['filter-keyword','filter-location','filter-mode','filter-experience','filter-source','filter-sort','filter-status'].forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
         const evt = el.tagName === 'INPUT' ? 'input' : 'change';
@@ -1177,6 +1258,45 @@
         return lines.join('\n');
       }
 
+      // ── Recent Status Updates section ───────────────────────────
+      function renderRecentStatusUpdates() {
+        const section = document.getElementById('digest-status-section');
+        const list    = document.getElementById('digest-status-list');
+        if (!section || !list) return;
+
+        let statusData;
+        try { statusData = JSON.parse(localStorage.getItem('jobTrackerStatus') || '{}'); }
+        catch { statusData = {}; }
+
+        const entries = Object.entries(statusData)
+          .filter(([, v]) => v && v.status && v.status !== 'Not Applied')
+          .map(([id, v]) => {
+            const job = (window.JOBS || []).find(j => j.id === parseInt(id, 10));
+            return job ? { job, status: v.status, date: v.date } : null;
+          })
+          .filter(Boolean)
+          .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+        if (entries.length === 0) { section.style.display = 'none'; return; }
+
+        section.style.display = '';
+        list.innerHTML = entries.map(({ job, status, date }) => {
+          const cls = status === 'Applied'  ? 'digest-status-item__status--applied'
+                    : status === 'Rejected' ? 'digest-status-item__status--rejected'
+                    : status === 'Selected' ? 'digest-status-item__status--selected'
+                    : '';
+          return `
+            <li class="digest-status-item">
+              <div class="digest-status-item__info">
+                <div class="digest-status-item__title">${job.title}</div>
+                <div class="digest-status-item__company">${job.company}</div>
+              </div>
+              <span class="digest-status-item__status ${cls}">${status}</span>
+              <span class="digest-status-item__date">${date || '—'}</span>
+            </li>`;
+        }).join('');
+      }
+
       // ── Render digest card into the DOM ─────────────────────
       function paintDigest(items, dateStr) {
         // Date
@@ -1245,6 +1365,8 @@
           const body    = encodeURIComponent(text);
           emailBtn.href = `mailto:?subject=${subject}&body=${body}`;
         }
+
+        renderRecentStatusUpdates();
       }
 
       // ── Main render function (called on route /digest) ───────
@@ -1257,6 +1379,7 @@
           document.getElementById('digest-card').style.display = 'none';
           document.getElementById('digest-no-matches').style.display = 'none';
           document.getElementById('digest-actions').style.display = 'none';
+          renderRecentStatusUpdates();
           return;
         }
 
@@ -1281,6 +1404,7 @@
         document.getElementById('digest-card').style.display = 'none';
         document.getElementById('digest-no-matches').style.display = 'none';
         document.getElementById('digest-actions').style.display = 'none';
+        renderRecentStatusUpdates();
       }
 
       // ── Generate button click ─────────────────────────────
@@ -1314,6 +1438,9 @@
 
     })();
   </script>
+
+  <!-- ── Toast notification (Phase 7) ──────────────────── -->
+  <div id="status-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
 
 </body>
 </html>

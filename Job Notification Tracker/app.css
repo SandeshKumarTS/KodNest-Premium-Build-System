@@ -1238,3 +1238,183 @@
     flex-direction: column;
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PHASE 7 — STATUS TRACKING, TOAST & DIGEST STATUS UPDATES
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Status button group on job cards ─────────────────────── */
+.status-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface-subtle);
+}
+
+.status-btn {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-text-muted);
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  white-space: nowrap;
+}
+.status-btn:hover {
+  opacity: 0.75;
+}
+
+/* Active (is-current) variants */
+.status-btn--not-applied.is-current {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+  font-weight: var(--weight-semibold);
+}
+.status-btn--applied.is-current {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border-color: #93C5FD;
+  font-weight: var(--weight-semibold);
+}
+.status-btn--rejected.is-current {
+  background: #FEF2F2;
+  color: #DC2626;
+  border-color: #FCA5A5;
+  font-weight: var(--weight-semibold);
+}
+.status-btn--selected.is-current {
+  background: #F0FDF4;
+  color: #16A34A;
+  border-color: #86EFAC;
+  font-weight: var(--weight-semibold);
+}
+
+/* ── Toast notification ──────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1F2937;
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 250ms ease, transform 250ms ease;
+  pointer-events: none;
+}
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Digest — Recent Status Updates section ──────────────── */
+.digest-status-section {
+  max-width: 680px;
+  margin-top: var(--space-5);
+}
+
+.digest-status__heading {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.digest-status-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.digest-status-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.digest-status-item:last-child {
+  border-bottom: none;
+}
+
+.digest-status-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.digest-status-item__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.digest-status-item__company {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.digest-status-item__status {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.digest-status-item__status--applied  { background: #EFF6FF; color: #1D4ED8; }
+.digest-status-item__status--rejected { background: #FEF2F2; color: #DC2626; }
+.digest-status-item__status--selected { background: #F0FDF4; color: #16A34A; }
+
+.digest-status-item__date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .status-group {
+    gap: 3px;
+  }
+  .status-btn {
+    font-size: 10px;
+    padding: 3px 7px;
+  }
+  .toast {
+    bottom: 16px;
+    right: 12px;
+    left: 12px;
+    text-align: center;
+  }
+  .digest-status-item {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+}
