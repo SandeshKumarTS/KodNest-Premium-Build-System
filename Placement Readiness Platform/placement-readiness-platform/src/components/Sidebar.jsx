@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom"
-import { LayoutDashboard, Code, ClipboardList, BookOpen, User } from "lucide-react"
+import { LayoutDashboard, Code, ClipboardList, BookOpen, User, Search, History } from "lucide-react"
 
 export default function Sidebar() {
 
   return (
+
     <div className="w-64 h-screen border-r p-6">
 
       <nav className="space-y-6">
@@ -24,6 +25,14 @@ export default function Sidebar() {
           <BookOpen size={18}/> Resources
         </Link>
 
+        <Link to="/analyze" className="flex items-center gap-2">
+          <Search size={18}/> Analyze JD
+        </Link>
+
+        <Link to="/history" className="flex items-center gap-2">
+          <History size={18}/> History
+        </Link>
+
         <Link to="/profile" className="flex items-center gap-2">
           <User size={18}/> Profile
         </Link>
@@ -31,5 +40,6 @@ export default function Sidebar() {
       </nav>
 
     </div>
+
   )
 }
